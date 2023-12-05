@@ -1,0 +1,31 @@
+* {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.font-large {
+  font-size: 24px;
+}
+
+.font-medium {
+  font-size: 18px;
+}
+
+.font-small {
+  font-size: 14px;
+}
+
+.color-dark {
+  background-color: rgb(22, 26, 48);
+}
+
+.color-mediumdark {
+  background-color: rgb(49, 48, 77);
+}
+
+.color-mediumlight {
+  background-color: rgb(182, 187, 196);
+}
+
+.color-light {
+  background-color: rgb(240, 236, 229);
+}
