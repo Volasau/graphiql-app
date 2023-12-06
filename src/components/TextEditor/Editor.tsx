@@ -3,11 +3,11 @@ import './Editor.css';
 function Editor() {
   return (
     <>
-      <div className="container">
+      <div className="max-width">
         <textarea
           cols={100}
-          rows={30}
-          className="paddingSmall font-small border"
+          rows={20}
+          className="paddingSmall font-small border width100"
         ></textarea>
       </div>
     </>

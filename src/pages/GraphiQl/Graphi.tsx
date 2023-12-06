@@ -1,9 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import style from './Graphi.module.css';
 import { useEffect } from 'react';
-import Editor from '../../components/TextEditor/Editor';
-import Viewer from '../../components/ResponseViewer/Viewer';
-import Panel from '../../components/ToolsPanel/Panel';
+import EditorPanel from '../../components/EditorPanel/Panel';
 
 function Graphi() {
   const auth = false;
@@ -20,9 +18,7 @@ function Graphi() {
         <h1>GraphiQL</h1>
       </div>
       <div className={style.editorPanel}>
-        <Editor></Editor>
-        <Panel></Panel>
-        <Viewer></Viewer>
+        <EditorPanel></EditorPanel>
       </div>
     </>
   );

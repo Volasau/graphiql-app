@@ -2,10 +2,13 @@
     display: flex;
     justify-content: center;
   }
-.paddingSmall {
-    padding: 14px;
-}  
 
 .border {
-    border: 2px solid  rgb(182, 187, 196);
+    border: 1px solid rgb(182, 187, 196);
+}
+
+.max-width {
+    max-width: 100%;
+    min-width: 320px;
+    flex-wrap: wrap;
 }

@@ -5,7 +5,9 @@
 
 .editorPanel {
   display: flex;
-  padding: 20px;
   justify-content: center;
   background-color: rgb(240, 236, 229);
+  max-width: 100%;
+  min-width: 320px;
+  flex-wrap: wrap;
 }

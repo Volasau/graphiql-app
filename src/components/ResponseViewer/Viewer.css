@@ -1,6 +1,12 @@
-.paddingSmall {
-    padding: 14px;
-}  
-.border {
-    border: 2px solid  rgb(182, 187, 196);
+.width-half {
+    width: 23%;
+}
+
+.width-full {
+    width: 45%;
+}
+
+.width100{ 
+    max-width: 100%;
+    min-width: 320px;
 }
