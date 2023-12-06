@@ -6,7 +6,7 @@ import { useState } from 'react';
 function Layout() {
   //временно устанавливаем в ручную что пользователь не авторизован
   const auth = false;
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
 
   const navigate = useNavigate();
 
@@ -24,8 +24,11 @@ function Layout() {
     <>
       <div>
         <header className={style.container}>
-          <Link to="/">Wellcome</Link>
+          <Link to="/" className={style.link}>
+            Wellcome
+          </Link>
           <Link
+            className={style.link}
             onClick={handleGraphiQLClick}
             to={auth ? '/graphiql' : '/login'}
           >
@@ -33,21 +36,29 @@ function Layout() {
           </Link>
           {login ? (
             <>
-              <button onClick={handleLogoutClick}>OUT</button>
+              <button onClick={handleLogoutClick} className={style.link}>
+                OUT
+              </button>
             </>
           ) : (
             <>
-              <Link to="/login">Login</Link>
-              <Link to="/registration">Registration</Link>
+              <Link to="/login" className={style.link}>
+                Login
+              </Link>
+              <Link to="/registration" className={style.link}>
+                Registration
+              </Link>
             </>
           )}
+          <div className={style.link}>
+            <button>EN</button>
+            <button>RU</button>
+          </div>
         </header>
         <div>
           <Outlet />
         </div>
-        <div className={style.footer}>
-          <Footer />
-        </div>
+        <Footer />
       </div>
     </>
   );

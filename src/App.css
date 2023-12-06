@@ -2,6 +2,10 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+body {
+  margin: 2px;
+}
+
 p {
   margin: 0;
 }
