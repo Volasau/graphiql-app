@@ -2,3 +2,12 @@
   display: flex;
   justify-content: space-around;
 }
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: rgb(182, 187, 196);
+  padding: 10px;
+}

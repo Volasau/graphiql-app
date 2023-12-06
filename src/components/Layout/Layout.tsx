@@ -45,7 +45,7 @@ function Layout() {
         <div>
           <Outlet />
         </div>
-        <div>
+        <div className={style.footer}>
           <Footer />
         </div>
       </div>
