@@ -2,3 +2,10 @@
   display: flex;
   justify-content: center;
 }
+
+.editorPanel {
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  background-color: rgb(240, 236, 229);
+}

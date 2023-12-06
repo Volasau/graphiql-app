@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    justify-content: center;
+  }
+.paddingSmall {
+    padding: 14px;
+}  
+
+.border {
+    border: 2px solid  rgb(182, 187, 196);
+}
