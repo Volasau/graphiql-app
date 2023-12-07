@@ -2,11 +2,14 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import style from './Layout.module.css';
 import { useState } from 'react';
+import { useLanguage } from '../../context/contextLanguage';
 
 function Layout() {
   //временно устанавливаем в ручную что пользователь не авторизован
   const auth = false;
   const [login, setLogin] = useState(false);
+  //Context для смены языка
+  const { lan, setLanguage } = useLanguage();
 
   const navigate = useNavigate();
 
@@ -20,12 +23,22 @@ function Layout() {
     setLogin(false);
   };
 
+  const handleLanClickEn = () => {
+    setLanguage('en');
+  };
+  const handleLanClickRu = () => {
+    setLanguage('ru');
+  };
+
   return (
     <>
       <div>
         <header className={style.container}>
-          <Link to="/">Wellcome</Link>
+          <Link to="/" className={style.link}>
+            {lan === 'en' ? 'Welcome' : 'Приветствие'}
+          </Link>
           <Link
+            className={style.link}
             onClick={handleGraphiQLClick}
             to={auth ? '/graphiql' : '/login'}
           >
@@ -33,21 +46,39 @@ function Layout() {
           </Link>
           {login ? (
             <>
-              <button onClick={handleLogoutClick}>OUT</button>
+              <button onClick={handleLogoutClick} className={style.link}>
+                OUT
+              </button>
             </>
           ) : (
             <>
-              <Link to="/login">Login</Link>
-              <Link to="/registration">Registration</Link>
+              <Link to="/login" className={style.link}>
+                {lan === 'en' ? 'Login' : 'Логин'}
+              </Link>
+              <Link to="/registration" className={style.link}>
+                {lan === 'en' ? 'Registration' : 'Регистрация'}
+              </Link>
             </>
           )}
+          <div className={style.link}>
+            <button
+              onClick={handleLanClickEn}
+              className={lan === 'en' ? style.active : ''}
+            >
+              EN
+            </button>
+            <button
+              onClick={handleLanClickRu}
+              className={lan === 'ru' ? style.active : ''}
+            >
+              RU
+            </button>
+          </div>
         </header>
         <div>
           <Outlet />
         </div>
-        <div>
-          <Footer />
-        </div>
+        <Footer />
       </div>
     </>
   );
