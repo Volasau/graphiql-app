@@ -1,11 +1,43 @@
 import './Panel.css';
 import Editor from '../TextEditor/Editor';
 import Viewer from '../ResponseViewer/Viewer';
-import { useState } from 'react';
 import Explorer from '../Explorer/Explorer';
+import { request, gql } from 'graphql-request';
+import { ChangeEvent, useState } from 'react';
 
 function EditorPanel() {
   const [showExplorer, setShowExplorer] = useState(false);
+  const [endpoint, setEndpoint] = useState('');
+  //const endpoint = 'https://rickandmortyapi.com/graphql';
+  const [fields, setFields] = useState([]);
+
+  // get fields from type Character
+  const getSchema = () => {
+    const introspectionQuery = gql`
+      query {
+        __type(name: "Character") {
+          name
+          fields {
+            name
+            type {
+              name
+              kind
+            }
+          }
+        }
+      }
+    `;
+    request(endpoint, introspectionQuery)
+      .then((data) => {
+        const t = data.__type.fields;
+        setFields(t);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const apiChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setEndpoint(event.target.value);
+  };
 
   const explorerClickHandler = () => {
     setShowExplorer(!showExplorer);
@@ -21,6 +53,18 @@ function EditorPanel() {
           <div title="Prettify" className="prettify-button padding-top-small">
             <img className="icon" src="src/assets/images/prettifyIcon.png" />
           </div>
+        </div>
+        <div className="flex api-block">
+          <span className="margin-right-small">API: </span>
+          <input
+            className="margin-right-small input font-small"
+            type="text"
+            placeholder="enter API url..."
+            onChange={apiChangeHandler}
+          />
+          <button className="button color-mediumlight" onClick={getSchema}>
+            Get schema
+          </button>
         </div>
         <div className="color-light flex-wrap">
           <Editor></Editor>
@@ -40,7 +84,7 @@ function EditorPanel() {
                 }
               />
             </div>
-            {showExplorer ? <Explorer></Explorer> : <></>}
+            {showExplorer ? <Explorer fields={fields}></Explorer> : <></>}
           </div>
         </div>
       </div>
