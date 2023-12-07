@@ -1,4 +1,17 @@
 .container {
+  height: 40px;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  background-color: rgb(182, 187, 196);
+  padding: 10px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+}
+
+.active {
+  background-color: rgb(182, 187, 196);
 }

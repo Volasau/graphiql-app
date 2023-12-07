@@ -1,4 +1,32 @@
-.container {
+li {
+  list-style-type: none;
+}
+
+.wrapper_link {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logorss {
+  width: 100px;
+}
+
+.logogit {
+  width: 30px;
+}
+
+.link_github {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: rgb(182, 187, 196);
+  padding: 10px;
 }
