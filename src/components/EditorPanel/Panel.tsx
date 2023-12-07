@@ -4,8 +4,10 @@ import Viewer from '../ResponseViewer/Viewer';
 import Explorer from '../Explorer/Explorer';
 import { request, gql } from 'graphql-request';
 import { ChangeEvent, useState } from 'react';
+import { useLanguage } from '../../context/contextLanguage';
 
 function EditorPanel() {
+  const { lan } = useLanguage();
   const [showExplorer, setShowExplorer] = useState(false);
   const [endpoint, setEndpoint] = useState('');
   //const endpoint = 'https://rickandmortyapi.com/graphql';
@@ -59,11 +61,13 @@ function EditorPanel() {
           <input
             className="margin-right-small input font-small"
             type="text"
-            placeholder="enter API url..."
+            placeholder={
+              lan === 'en' ? 'enter API url...' : 'введите API url...'
+            }
             onChange={apiChangeHandler}
           />
           <button className="button color-mediumlight" onClick={getSchema}>
-            Get schema
+            {lan === 'en' ? 'Get schema' : 'Получить схему'}
           </button>
         </div>
         <div className="color-light flex-wrap">

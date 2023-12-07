@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useLanguage } from '../../context/contextLanguage';
 import './Editor.css';
 
 function Editor() {
+  const { lan } = useLanguage();
   const [variablesVisible, setVariablesVisible] = useState(true);
   const [headersVisible, setHeadersVisible] = useState(false);
   const [showParameters, setShowParameters] = useState(false);
@@ -34,13 +36,13 @@ function Editor() {
               className={variablesVisible ? 'active tab-header' : 'tab-header'}
               onClick={variablesClickHandler}
             >
-              Variables
+              {lan === 'en' ? 'Variables' : 'Переменные'}
             </div>
             <div
               className={headersVisible ? 'active tab-header' : 'tab-header'}
               onClick={headersClickHandler}
             >
-              Headers
+              {lan === 'en' ? 'Headers' : 'Заголовки'}
             </div>
           </div>
           <div
@@ -61,7 +63,9 @@ function Editor() {
         {showParameters && variablesVisible ? (
           <textarea
             id="variables"
-            placeholder="enter variables..."
+            placeholder={
+              lan === 'en' ? 'enter variables...' : 'введите переменные...'
+            }
             cols={100}
             rows={10}
             className="paddingSmall font-small border width100"
@@ -72,7 +76,9 @@ function Editor() {
         {showParameters && headersVisible ? (
           <textarea
             id="headers"
-            placeholder="enter headers..."
+            placeholder={
+              lan === 'en' ? 'enter headers...' : 'введите заголовки...'
+            }
             cols={100}
             rows={10}
             className="paddingSmall font-small border width100"
