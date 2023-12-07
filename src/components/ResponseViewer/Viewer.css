@@ -1,0 +1,12 @@
+.width-half {
+    width: 23%;
+}
+
+.width-full {
+    width: 45%;
+}
+
+.width100{ 
+    max-width: 100%;
+    min-width: 320px;
+}
