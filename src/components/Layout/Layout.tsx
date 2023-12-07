@@ -2,11 +2,14 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import style from './Layout.module.css';
 import { useState } from 'react';
+import { useLanguage } from '../../context/contextLanguage';
 
 function Layout() {
   //временно устанавливаем в ручную что пользователь не авторизован
   const auth = false;
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
+  //Context для смены языка
+  const { lan, setLanguage } = useLanguage();
 
   const navigate = useNavigate();
 
@@ -20,12 +23,19 @@ function Layout() {
     setLogin(false);
   };
 
+  const handleLanClickEn = () => {
+    setLanguage('en');
+  };
+  const handleLanClickRu = () => {
+    setLanguage('ru');
+  };
+
   return (
     <>
       <div>
         <header className={style.container}>
           <Link to="/" className={style.link}>
-            Wellcome
+            {lan === 'en' ? 'Welcome' : 'Приветствие'}
           </Link>
           <Link
             className={style.link}
@@ -43,16 +53,26 @@ function Layout() {
           ) : (
             <>
               <Link to="/login" className={style.link}>
-                Login
+                {lan === 'en' ? 'Login' : 'Логин'}
               </Link>
               <Link to="/registration" className={style.link}>
-                Registration
+                {lan === 'en' ? 'Registration' : 'Регистрация'}
               </Link>
             </>
           )}
           <div className={style.link}>
-            <button>EN</button>
-            <button>RU</button>
+            <button
+              onClick={handleLanClickEn}
+              className={lan === 'en' ? style.active : ''}
+            >
+              EN
+            </button>
+            <button
+              onClick={handleLanClickRu}
+              className={lan === 'ru' ? style.active : ''}
+            >
+              RU
+            </button>
           </div>
         </header>
         <div>

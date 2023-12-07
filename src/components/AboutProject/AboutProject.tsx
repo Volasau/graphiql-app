@@ -1,15 +1,16 @@
 import { DataAboutProgect } from '../../utils/data/DataAbout';
 import style from './AboutProject.module.css';
 import Rss from '../../../public/graphql-email-api.png';
+import { useLanguage } from '../../context/contextLanguage';
 
 function AboutProject() {
-  const lan = 'en';
+  const { lan } = useLanguage();
   return (
     <>
       <div className={style.container}>
         <div className={style.wrapper}>
           <div className={style.text}>
-            <h3>GraphiQL Project</h3>
+            <h3> {lan === 'en' ? 'GraphiQL Project' : 'GraphiQL Проект'}</h3>
             <p>
               {lan === 'en'
                 ? DataAboutProgect.en.discription
