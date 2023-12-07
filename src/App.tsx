@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Welcome from './pages/Welcome/Welcome';
 import Layout from './components/Layout/Layout';
-import Login from './pages/Login/Login';
-import Registration from './pages/Registration/Registration';
+import Login from './pages/Login/LoginPage';
+import Registration from './pages/RegisterPage/RegisterPage';
 import Error from './pages/Error/Error';
 import Graphi from './pages/GraphiQl/Graphi';
 
