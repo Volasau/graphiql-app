@@ -1,10 +1,11 @@
-import style from './RegistrComp.module.css';
+import RegisterComp from '../../components/RegisterComp/RegisterComp';
+import style from './RegisterPage.module.css';
 
 function Registration() {
   return (
     <>
       <div className={style.container}>
-        <h1>Registration</h1>
+        <RegisterComp />
       </div>
     </>
   );
