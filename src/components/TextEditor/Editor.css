@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    justify-content: center;
+  }
+
+.border {
+    border: 1px solid rgb(182, 187, 196);
+}
+
+.max-width {
+    max-width: 100%;
+    min-width: 320px;
+    flex-wrap: wrap;
+}
+
+.tab-header {
+    border: 1px solid rgb(182, 187, 196);
+    margin-right: 6px;
+    border-radius: 6px;
+    line-height: 28px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.active {
+    background-color: rgb(182, 187, 196);
+}
+
+.flex-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.margin-rightXS {
+    margin-right: 6px;
+}

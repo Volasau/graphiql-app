@@ -1,0 +1,71 @@
+.padding-top-small {
+    padding-top: 14px;
+}
+
+.margin-right-small {
+    margin-right: 14px;
+}
+
+.baseline {
+    align-items: baseline;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.api-block {
+    height: 40px;
+    align-items: center;
+}
+
+.button {
+    height: 24px;
+    border: none;
+    border-radius: 4px;
+}
+
+.button:hover {
+    cursor: pointer;
+    color: white;
+    background-color:  rgb(49, 48, 77);
+}
+
+.input {
+    width: 300px;
+    height: 24px;
+    border: none;
+    border-radius: 4px;
+}
+
+.run-button {
+    height: 30px;
+}
+
+.prettify-button {
+    height: 30px;
+}
+
+.icon:hover {
+    cursor: pointer;
+    border-radius: 12px;
+    background-color: rgb(182, 187, 196);
+}
+
+.padding-top-small {
+    padding-top: 14px;
+}
+
+.explorer-block {
+    min-width: 99px;
+    position: relative;
+    left: 0px;
+}
+
+
