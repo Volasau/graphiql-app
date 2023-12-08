@@ -16,6 +16,7 @@ function Explorer(props: ExplorerProps) {
         </div>
         <div className="font-medium">Fields</div>
         {props.fields?.length ? (
+          // eslint-disable-next-line react/jsx-key
           props.fields?.map((item) => <Item item={item} />)
         ) : (
           <h2 data-testid="empty-text">No items</h2>
