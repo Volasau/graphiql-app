@@ -2,6 +2,7 @@ import './Viewer.css';
 
 interface ViewerProps {
   widthHalf: boolean;
+  value: string;
 }
 
 function Viewer(props: ViewerProps) {
@@ -13,7 +14,7 @@ function Viewer(props: ViewerProps) {
           rows={20}
           readOnly
           className="paddingSmall border width100"
-          value="readony response viewer"
+          value={props.value}
         >
           Readonly response
         </textarea>
