@@ -11,6 +11,19 @@ function Layout() {
   //Context для смены языка
   const { lan, setLanguage } = useLanguage();
 
+  //анимация хедера при скролле
+  const [scrolling, setScrolling] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setScrolling(true);
+    } else {
+      setScrolling(false);
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll);
+
   const navigate = useNavigate();
 
   const handleGraphiQLClick = () => {
@@ -33,7 +46,9 @@ function Layout() {
   return (
     <>
       <div>
-        <header className={style.container}>
+        <header
+          className={`${style.container} ${scrolling ? style.scrolling : ''}`}
+        >
           <Link to="/" className={style.link}>
             {lan === 'en' ? 'Welcome' : 'Приветствие'}
           </Link>
