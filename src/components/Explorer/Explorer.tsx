@@ -16,7 +16,7 @@ function Explorer(props: ExplorerProps) {
         </div>
         <div className="font-medium">Fields</div>
         {props.fields?.length ? (
-          props.fields?.map((item) => <Item item={item} />)
+          props.fields?.map((item) => <Item key={Math.random()} item={item} />)
         ) : (
           <h2 data-testid="empty-text">No items</h2>
         )}

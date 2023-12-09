@@ -53,6 +53,7 @@ const RegisterComp = () => {
           <div>
             <label>Name</label>
             <input
+              id="nameReg"
               type="name"
               className={`form-control ${errors.name && 'invalid'}`}
               defaultValue=""
@@ -66,7 +67,7 @@ const RegisterComp = () => {
           </div>
           <div>
             <label>E-mail</label>
-            <input id="email" type="email" {...register('email')} />
+            <input id="emailReg" type="email" {...register('email')} />
             {errors.email && (
               <p>
                 <small className="text-danger">{errors.email.message}</small>
@@ -76,7 +77,7 @@ const RegisterComp = () => {
           <div>
             <label>Password</label>
             <input
-              id="password"
+              id="passwordReg"
               type="password"
               className={`form-control ${errors.password && 'invalid'}`}
               {...register('password')}
@@ -90,7 +91,7 @@ const RegisterComp = () => {
           <div>
             <label>Confirm password</label>
             <input
-              id="confirmPassword"
+              id="confirmPasswordReg"
               type="password"
               {...register('confirmPassword')}
               onPaste={(e) => {

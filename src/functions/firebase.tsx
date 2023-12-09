@@ -6,7 +6,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: 'AIzaSyAU_zcxzBSoX_TMthtVtRJ6RF6ozWrn-Wo',
   authDomain: 'graphiql-app-24102.firebaseapp.com',
   projectId: 'graphiql-app-24102',
