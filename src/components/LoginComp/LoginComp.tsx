@@ -19,7 +19,6 @@ function LoginComp() {
     resolver: yupResolver(userLoginSchema),
   });
   const userValue = useContext<UserContextType>(UserContext);
-  // const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -27,7 +26,6 @@ function LoginComp() {
       if (currentUser) {
         userValue.setUser(currentUser);
       }
-      // setUser(currentUser);
     });
     return () => unsubscribe();
   }, [userValue]);
