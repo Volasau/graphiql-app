@@ -1,12 +1,26 @@
 import { useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
+import CodeMirror from '@uiw/react-codemirror';
 import './Editor.css';
+import { prettify } from '../../utils/prettifier';
 
-function Editor() {
+interface EditorProps {
+  onQueryChange(code: string): void;
+}
+
+function Editor(props: EditorProps) {
   const { lan } = useLanguage();
   const [variablesVisible, setVariablesVisible] = useState(true);
   const [headersVisible, setHeadersVisible] = useState(false);
   const [showParameters, setShowParameters] = useState(false);
+  const [value, setValue] = useState('');
+  const variables = '';
+  const headers = '';
+
+  const codeChange = (value: string) => {
+    setValue(value);
+    props.onQueryChange(value);
+  };
 
   const variablesClickHandler = () => {
     setVariablesVisible(true);
@@ -22,14 +36,22 @@ function Editor() {
     setShowParameters(!showParameters);
   };
 
+  const runPrettify = () => {
+    setValue(prettify(value));
+  };
+
   return (
     <>
       <div className="max-width">
-        <textarea
-          cols={100}
-          rows={20}
-          className="paddingSmall font-small border width100"
-        ></textarea>
+        <div title="Prettify" onClick={runPrettify} className="prettify-button">
+          <img className="icon" src="src/assets/images/prettifyIcon.png" />
+        </div>
+        <CodeMirror
+          className="width100 max-width CodeMirror"
+          value={value}
+          height="320px"
+          onChange={codeChange}
+        />
         <div className="flex-buttons">
           <div className="flex">
             <div
@@ -61,28 +83,28 @@ function Editor() {
           </div>
         </div>
         {showParameters && variablesVisible ? (
-          <textarea
-            id="variables"
+          <CodeMirror
+            className="paddingSmall font-small border width100 max-width"
+            value={variables}
+            height="100px"
+            width="600px"
             placeholder={
               lan === 'en' ? 'enter variables...' : 'введите переменные...'
             }
-            cols={100}
-            rows={10}
-            className="paddingSmall font-small border width100"
-          ></textarea>
+          />
         ) : (
           <></>
         )}
         {showParameters && headersVisible ? (
-          <textarea
-            id="headers"
+          <CodeMirror
+            className="paddingSmall font-small border width100 max-width"
+            value={headers}
+            height="100px"
+            width="600px"
             placeholder={
               lan === 'en' ? 'enter headers...' : 'введите заголовки...'
             }
-            cols={100}
-            rows={10}
-            className="paddingSmall font-small border width100"
-          ></textarea>
+          />
         ) : (
           <></>
         )}

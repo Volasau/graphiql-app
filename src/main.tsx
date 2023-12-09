@@ -4,16 +4,16 @@ import App from './App';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { LanguageProvider } from './context/contextLanguage';
-import { UserProvider } from './context/authContext';
+import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <LanguageProvider>
-        <UserProvider>
+      <ErrorBoundary>
+        <LanguageProvider>
           <App />
-        </UserProvider>
-      </LanguageProvider>
+        </LanguageProvider>
+      </ErrorBoundary>
     </BrowserRouter>
   </React.StrictMode>
 );
