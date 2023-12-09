@@ -1,132 +1,74 @@
-// import React, { useContext } from 'react';
-// import { redirect } from 'react-router-dom';
-// import { AuthContext } from '../../context/authContext';
 import { auth } from '../../functions/firebase';
-// import { useForm } from 'react-hook-form';
-// import { IFormInput } from '../../functions/UserValidation';
-// import { yupResolver } from '@hookform/resolvers/yup';
-
-import { signInWithEmailAndPassword, signOut } from '@firebase/auth';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { onAuthStateChanged, signInWithEmailAndPassword } from '@firebase/auth';
 import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
-// import {
-//   LoginEmailContext,
-//   LoginEmailContextType,
-//   LoginPasswordContext,
-//   LoginPasswordContextType,
-// } from '../../context/authContext';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import {
+  IFormLoginInput,
+  userLoginSchema,
+} from '../../functions/UserLoginValidation';
+import { useContext, useEffect } from 'react';
+import { UserContext, UserContextType } from '../../context/authContext';
 
 function LoginComp() {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<IFormInput>({
-  //   resolver: yupResolver(userSchema),
-  // });
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  // const loginEmail = useContext<LoginEmailContextType>(LoginEmailContext);
-  // const loginPassword =
-  //   useContext<LoginPasswordContextType>(LoginPasswordContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormLoginInput>({
+    resolver: yupResolver(userLoginSchema),
+  });
+  const userValue = useContext<UserContextType>(UserContext);
   // const [user, setUser] = useState<User | null>(null);
 
-  const [user, loading] = useAuthState(auth);
-  // onAuthStateChanged(auth, (currentUser) => {
-  //   setUser(currentUser);
-  //   console.log('Auth state changed:', currentUser);
-  // });
-
   useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
-    if (user) navigate('/login');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, loading]);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+      if (currentUser) {
+        userValue.setUser(currentUser);
+      }
+      // setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, [userValue]);
+
   const navigate = useNavigate();
-  async function onhandleLogin(event: React.MouseEvent) {
-    event.preventDefault();
-    // console.log(data);
+
+  const loginHandler = async (data: { email: string; password: string }) => {
     try {
-      await signInWithEmailAndPassword(auth, loginEmail, loginPassword).then(
-        (userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          // ...
-        }
-      );
+      await signInWithEmailAndPassword(auth, data.email, data.password);
       console.log('success');
     } catch (error) {
       alert(error);
     }
     navigate('/');
     alert('User Logged In Successfully');
-  }
+  };
 
-  async function onhandleLogOut() {
-    try {
-      await signOut(auth);
-      console.log('signed out');
-    } catch (error) {
-      console.log(error);
-      // An error happened.
-    }
-    alert('User Logged Out Successfully');
-  }
-
-  // const { currentUser } = useContext(AuthContext);
-
-  // if (currentUser) {
-  //   return redirect('/');
-  // }
   return (
     <>
       <h1>Log In</h1>
-      <form>
+      <form onSubmit={handleSubmit(loginHandler)}>
         <label>Email</label>
-        <input
-          id="emailLog"
-          type="email"
-          // {...register('email')}
-          onChange={(event) => {
-            setLoginEmail(event.target.value);
-          }}
-        />
-        {/* {errors.email && (
+        <input id="emailLog" type="email" {...register('email')} />
+        {errors.email && (
           <p>
             <small className="text-danger">{errors.email.message}</small>
           </p>
-        )} */}
+        )}
         <div>
           <label>Password</label>
-          <input
-            id="passwordLog"
-            type="password"
-            // className={`form-control ${errors.password && 'invalid'}`}
-            // {...register('password')}
-            onChange={(event) => {
-              setLoginPassword(event.target.value);
-            }}
-          />
-          {/* {errors.password && (
+          <input id="passwordLog" type="password" {...register('password')} />
+          {errors.password && (
             <p>
               <small className="text-danger">{errors.password.message}</small>
             </p>
-          )} */}
+          )}
         </div>
-        <input
-          type="submit"
-          value="Log in"
-          onClick={(event) => onhandleLogin(event)}
-        />
+        <button type="submit">Submit</button>
       </form>
       <h4>User Logged In:</h4>
-      {user?.email}
-      <button onClick={onhandleLogOut}>Logout</button>
+      {userValue.user !== null ? userValue.user.email : null}
     </>
   );
 }
