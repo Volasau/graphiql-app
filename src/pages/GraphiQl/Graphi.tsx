@@ -1,17 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import style from './Graphi.module.css';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import EditorPanel from '../../components/EditorPanel/Panel';
+import { LoginContext, LoginContextType } from '../../context/loginContext';
 
 function Graphi() {
-  const auth = false;
+  const loginValue = useContext<LoginContextType>(LoginContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // if (!auth) {
-    //   navigate('/login');
-    // }
-  }, [auth, navigate]);
+    if (!loginValue.login) {
+      navigate('/login');
+    }
+  }, [loginValue.login, navigate]);
   return (
     <>
       <div className={style.container}>

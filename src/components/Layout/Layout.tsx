@@ -80,7 +80,7 @@ function Layout() {
           {loginValue.login ? (
             <>
               <button onClick={handleLogoutClick} className={style.link}>
-                OUT
+                Logout
               </button>
             </>
           ) : (

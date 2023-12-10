@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   User,
   createUserWithEmailAndPassword,
@@ -9,8 +9,11 @@ import { auth } from '../../functions/firebase';
 import { useNavigate } from 'react-router-dom';
 import { IFormInput, userSchema } from '../../functions/UserValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { LoginContext, LoginContextType } from '../../context/loginContext';
 
 const RegisterComp = () => {
+  const loginValue = useContext<LoginContextType>(LoginContext);
+
   const {
     handleSubmit,
     formState: { errors },
@@ -36,7 +39,8 @@ const RegisterComp = () => {
         });
         console.log(user);
       });
-      navigate('/');
+      loginValue.setLogin(true);
+      navigate('/graphiql');
       alert('User Created Successfully');
     } catch (error) {
       console.log(error);

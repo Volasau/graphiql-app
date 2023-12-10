@@ -7,7 +7,7 @@ export type LoginContextType = {
 };
 
 export const loginContextState = {
-  login: true,
+  login: false,
   setLogin: () => {},
 };
 
@@ -18,7 +18,7 @@ type LoginProviderProps = {
 };
 
 export const LoginProvider: React.FC<LoginProviderProps> = ({ children }) => {
-  const [login, setLoginValue] = useState<boolean>(true);
+  const [login, setLoginValue] = useState<boolean>(false);
 
   const setLogin = (loginValue: boolean) => {
     setLoginValue(loginValue);
