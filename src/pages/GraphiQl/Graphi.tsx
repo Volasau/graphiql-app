@@ -9,9 +9,9 @@ function Graphi() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loginValue.login) {
-      navigate('/login');
-    }
+    // if (!loginValue.login) {
+    //   navigate('/login');
+    // }
   }, [loginValue.login, navigate]);
   return (
     <>
