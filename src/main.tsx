@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { LanguageProvider } from './context/contextLanguage';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
 import { UserProvider } from './context/authContext';
+import { LoginProvider } from './context/loginContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ErrorBoundary>
         <LanguageProvider>
           <UserProvider>
-            <App />
+            <LoginProvider>
+              <App />
+            </LoginProvider>
           </UserProvider>
         </LanguageProvider>
       </ErrorBoundary>

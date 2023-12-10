@@ -4,7 +4,7 @@ import React, { ReactNode, createContext, useContext, useState } from 'react';
 /// User
 export type UserContextType = {
   user: User | null;
-  setUser: (userValue: User) => void;
+  setUser: (userValue: User | null) => void;
 };
 
 export const userContextState = {
@@ -21,7 +21,7 @@ type UserProviderProps = {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUserValue] = useState<User | null>(null);
 
-  const setUser = (userValue: User) => {
+  const setUser = (userValue: User | null) => {
     setUserValue(userValue);
   };
 

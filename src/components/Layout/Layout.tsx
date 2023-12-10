@@ -1,13 +1,18 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import style from './Layout.module.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
+import { UserContext, UserContextType } from '../../context/authContext';
+import { signOut } from '@firebase/auth';
+import { auth } from '../../functions/firebase';
+import { LoginContext, LoginContextType } from '../../context/loginContext';
 
 function Layout() {
   //временно устанавливаем в ручную что пользователь не авторизован
-  const auth = false;
-  const [login, setLogin] = useState(false);
+  const userValue = useContext<UserContextType>(UserContext);
+  const loginValue = useContext<LoginContextType>(LoginContext);
+
   //Context для смены языка
   const { lan, setLanguage } = useLanguage();
 
@@ -27,15 +32,28 @@ function Layout() {
   const navigate = useNavigate();
 
   const handleGraphiQLClick = () => {
-    if (!auth) {
+    if (!loginValue.login) {
       navigate('/login');
+      console.log('handleGraph', loginValue.login);
     }
   };
 
-  const handleLogoutClick = () => {
-    setLogin(false);
+  const handleLogoutClick = async () => {
+    if (loginValue.login) {
+      try {
+        await signOut(auth);
+        userValue.setUser(null);
+        console.log('signed out');
+        loginValue.setLogin(false);
+        navigate('/');
+        console.log('onlogout', loginValue.login);
+        console.log('onlogout context', userValue.user);
+      } catch (error) {
+        console.log(error);
+      }
+      alert('User Logged Out Successfully');
+    }
   };
-
   const handleLanClickEn = () => {
     setLanguage('en');
   };
@@ -55,11 +73,11 @@ function Layout() {
           <Link
             className={style.link}
             onClick={handleGraphiQLClick}
-            to={auth ? '/graphiql' : '/login'}
+            to={loginValue.login ? '/graphiql' : '/login'}
           >
             GraphiQL
           </Link>
-          {login ? (
+          {loginValue.login ? (
             <>
               <button onClick={handleLogoutClick} className={style.link}>
                 OUT

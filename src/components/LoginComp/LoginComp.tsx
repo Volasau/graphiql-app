@@ -9,6 +9,7 @@ import {
 } from '../../functions/UserLoginValidation';
 import { useContext, useEffect } from 'react';
 import { UserContext, UserContextType } from '../../context/authContext';
+import { LoginContext, LoginContextType } from '../../context/loginContext';
 
 function LoginComp() {
   const {
@@ -17,8 +18,10 @@ function LoginComp() {
     formState: { errors },
   } = useForm<IFormLoginInput>({
     resolver: yupResolver(userLoginSchema),
+    mode: 'onChange',
   });
   const userValue = useContext<UserContextType>(UserContext);
+  const loginValue = useContext<LoginContextType>(LoginContext);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -36,10 +39,11 @@ function LoginComp() {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
       console.log('success');
+      loginValue.setLogin(true);
     } catch (error) {
       alert(error);
     }
-    navigate('/');
+    navigate('/graphiql');
     alert('User Logged In Successfully');
   };
 
