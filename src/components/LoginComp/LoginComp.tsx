@@ -10,6 +10,8 @@ import {
 import { useContext, useEffect } from 'react';
 import { UserContext, UserContextType } from '../../context/authContext';
 import { LoginContext, LoginContextType } from '../../context/loginContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function LoginComp() {
   const {
@@ -22,33 +24,33 @@ function LoginComp() {
   });
   const userValue = useContext<UserContextType>(UserContext);
   const loginValue = useContext<LoginContextType>(LoginContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(currentUser);
       if (currentUser) {
         userValue.setUser(currentUser);
+        navigate('/graphiql');
+        toast.success('You login');
       }
     });
     return () => unsubscribe();
-  }, [userValue]);
-
-  const navigate = useNavigate();
+  }, [userValue, navigate]);
 
   const loginHandler = async (data: { email: string; password: string }) => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      console.log('success');
       loginValue.setLogin(true);
     } catch (error) {
-      alert(error);
+      loginValue.setLogin(false);
+      toast.error(`${error}`);
     }
-    navigate('/graphiql');
-    alert('User Logged In Successfully');
   };
 
   return (
     <>
+      <ToastContainer />
       <h1>Log In</h1>
       <form onSubmit={handleSubmit(loginHandler)}>
         <label>Email</label>

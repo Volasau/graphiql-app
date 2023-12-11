@@ -3,15 +3,33 @@ import style from './Graphi.module.css';
 import { useContext, useEffect } from 'react';
 import EditorPanel from '../../components/EditorPanel/Panel';
 import { LoginContext, LoginContextType } from '../../context/loginContext';
+// import { UserContext, UserContextType } from '../../context/authContext';
+import { onAuthStateChanged } from '@firebase/auth';
+import { auth } from '../../functions/firebase';
 
 function Graphi() {
   const loginValue = useContext<LoginContextType>(LoginContext);
   const navigate = useNavigate();
+  // const userValue = useContext<UserContextType>(UserContext);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+      if (!currentUser) {
+        loginValue.setLogin(false);
+        navigate('/');
+        // userValue.setUser(currentUser);
+        // loginValue.setLogin(true);
+        // navigate('/graphiql');
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate, loginValue]);
 
   useEffect(() => {
-    // if (!loginValue.login) {
-    //   navigate('/login');
-    // }
+    if (!loginValue.login) {
+      navigate('/login');
+    }
   }, [loginValue.login, navigate]);
   return (
     <>
