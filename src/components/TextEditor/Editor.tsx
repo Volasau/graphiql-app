@@ -6,6 +6,7 @@ import { prettify } from '../../utils/prettifier';
 
 interface EditorProps {
   onQueryChange(code: string): void;
+  onVariablesChange(variables: string): void;
 }
 
 function Editor(props: EditorProps) {
@@ -14,12 +15,17 @@ function Editor(props: EditorProps) {
   const [headersVisible, setHeadersVisible] = useState(false);
   const [showParameters, setShowParameters] = useState(false);
   const [value, setValue] = useState('');
-  const variables = '';
+  const [variables, setVariables] = useState('');
   const headers = '';
 
   const codeChange = (value: string) => {
     setValue(value);
     props.onQueryChange(value);
+  };
+
+  const variablesChange = (value: string) => {
+    setVariables(value);
+    props.onVariablesChange(value);
   };
 
   const variablesClickHandler = () => {
@@ -86,6 +92,7 @@ function Editor(props: EditorProps) {
           <CodeMirror
             className="paddingSmall font-small border width100 max-width"
             value={variables}
+            onChange={variablesChange}
             height="100px"
             width="600px"
             placeholder={

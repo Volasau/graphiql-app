@@ -11,6 +11,7 @@ function EditorPanel() {
   const [showExplorer, setShowExplorer] = useState(false);
   const [endpoint, setEndpoint] = useState('');
   const [query, setQuery] = useState('');
+  const [variables, setVariables] = useState('');
   const [result, setResult] = useState('');
   //const endpoint = 'https://rickandmortyapi.com/graphql';
   const [fields, setFields] = useState([]);
@@ -19,13 +20,15 @@ function EditorPanel() {
   const getSchema = () => {
     const introspectionQuery = gql`
       query {
-        __type(name: "Character") {
-          name
-          fields {
-            name
-            type {
+        __schema {
+          queryType {
+            fields {
               name
-              kind
+              description
+              type {
+                name
+                kind
+              }
             }
           }
         }
@@ -33,14 +36,14 @@ function EditorPanel() {
     `;
     request(endpoint, introspectionQuery)
       .then((data) => {
-        const t = data.__type.fields;
+        const t = data.__schema.queryType.fields;
         setFields(t);
       })
       .catch((error) => console.error(error));
   };
 
   const runRequest = () => {
-    request(endpoint, query)
+    request(endpoint, query, JSON.parse(variables))
       .then((data) => {
         setResult(JSON.stringify(data, null, 3));
       })
@@ -53,6 +56,10 @@ function EditorPanel() {
 
   const queryChangeHandler = (value: string) => {
     setQuery(value);
+  };
+
+  const variablesChangeHandler = (value: string) => {
+    setVariables(value);
   };
 
   const explorerClickHandler = () => {
@@ -80,7 +87,10 @@ function EditorPanel() {
           </div>
         </div>
         <div className="color-light flex-wrap">
-          <Editor onQueryChange={queryChangeHandler}></Editor>
+          <Editor
+            onQueryChange={queryChangeHandler}
+            onVariablesChange={variablesChangeHandler}
+          ></Editor>
           <Viewer widthHalf={showExplorer} value={result}></Viewer>
           <div className="flex explorer-block">
             <div
