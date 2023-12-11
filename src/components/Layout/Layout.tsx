@@ -1,12 +1,14 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import style from './Layout.module.css';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 import { UserContext, UserContextType } from '../../context/authContext';
-import { signOut } from '@firebase/auth';
+import { onAuthStateChanged, signOut } from '@firebase/auth';
 import { auth } from '../../functions/firebase';
 import { LoginContext, LoginContextType } from '../../context/loginContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Layout() {
   //временно устанавливаем в ручную что пользователь не авторизован
@@ -31,6 +33,17 @@ function Layout() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
+      if (currentUser) {
+        userValue.setUser(currentUser);
+        loginValue.setLogin(true);
+      }
+    });
+    return () => unsubscribe();
+  }, [userValue, loginValue]);
+
   const handleGraphiQLClick = () => {
     if (!loginValue.login) {
       navigate('/login');
@@ -45,13 +58,13 @@ function Layout() {
         userValue.setUser(null);
         console.log('signed out');
         loginValue.setLogin(false);
+        toast.warning('User Logged Out Successfully');
         navigate('/');
         console.log('onlogout', loginValue.login);
         console.log('onlogout context', userValue.user);
       } catch (error) {
         console.log(error);
       }
-      alert('User Logged Out Successfully');
     }
   };
   const handleLanClickEn = () => {
@@ -64,6 +77,7 @@ function Layout() {
   return (
     <>
       <div>
+        <ToastContainer />
         <header
           className={`${style.container} ${scrolling ? style.scrolling : ''}`}
         >
