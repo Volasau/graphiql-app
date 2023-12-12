@@ -1,5 +1,5 @@
 .subContainer {
-  padding: 50px 0 90px;
+  padding: 20px 0 40px;
 }
 
 .registerHeader {
@@ -7,7 +7,7 @@
 }
 
 .registerForm {
-  padding: 70px;
+  padding: 40px 70px 40px;
   border: 2px solid rgb(182, 187, 196);
   border-radius: 10px;
 }
@@ -44,8 +44,8 @@ pre {
 }
 
 .regBtn {
-  margin: 20px 0 0 60px;
-  border-radius: 20px;
+  margin: 10px 0 0 50px;
+  border-radius: 4px;
   border: 1px solid rgb(182, 187, 196);
   background-color: rgb(240, 236, 229);
   color: rgb(49, 48, 77);
