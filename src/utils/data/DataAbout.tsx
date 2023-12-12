@@ -11,12 +11,14 @@ export const DataAboutProgect = {
 
 export const DataAboutCourse = {
   en: {
-    discription:
-      'Everyone can study at RS School, regardless of age, professional employment, or place of residence. However, you should have sufficient base knowledge before the program begins.Students of the RS School from the 2022Q3, which has passed RS School Stage #2 as well as new students with practical experience and knowledge of:JavaScript, TypeScript, Git, GitHub (clone, add, commit, push, pull, merge, rebase, working with Pull Request),NPM, WebpackCSS3 / HTML5, Chrome DevTools, Figma, Understanding of the REST',
+    p1: 'Everyone can study at RS School, regardless of age, professional employment, or place of residence.',
+    p2: 'However, you should have sufficient base knowledge before the program begins.Students of the RS School from the 2022Q3, which has passed RS School Stage #2 as well as new students with practical experience and knowledge of:',
+    p3: 'JavaScript, TypeScript, Git, GitHub (clone, add, commit, push, pull, merge, rebase, working with Pull Request),NPM, WebpackCSS3 / HTML5, Chrome DevTools, Figma, Understanding of the REST',
   },
   ru: {
-    discription:
-      'Учиться в RS School может каждый, независимо от возраста, профессиональной занятости и места жительства. Однако перед началом программы у вас должно быть достаточно базовых знаний.Учащиеся Школы РС третьего квартала 2023 года, прошедшие 2-й этап RS School, а также новые студенты, имеющие практический опыт и знания: JavaScript, TypeScript, Git, GitHub (clone, add, commit, push, pull, merge, rebase, working with Pull Request),NPM, WebpackCSS3 / HTML5, Chrome DevTools, Figma, Understanding of the REST',
+    p1: 'Учиться в RS School может каждый, независимо от возраста, профессиональной занятости и места жительства. ',
+    p2: 'Однако перед началом программы у вас должно быть достаточно базовых знаний.Учащиеся Школы РС третьего квартала 2023 года, прошедшие 2-й этап RS School, а также новые студенты, имеющие практический опыт и знания:',
+    p3: 'JavaScript, TypeScript, Git, GitHub (clone, add, commit, push, pull, merge, rebase, working with Pull Request),NPM, WebpackCSS3 / HTML5, Chrome DevTools, Figma, Understanding of the REST',
   },
 };
 
