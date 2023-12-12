@@ -6,15 +6,33 @@ import { request, gql } from 'graphql-request';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 
+export interface Field {
+  name: string;
+  type: {
+    name: string;
+    kind: string;
+  };
+}
+
+export interface SchemaData {
+  name: string;
+  description: string;
+  type: {
+    name: string;
+    kind: string;
+  };
+}
+
 function EditorPanel() {
   const { lan } = useLanguage();
   const [showExplorer, setShowExplorer] = useState(false);
   const [endpoint, setEndpoint] = useState('');
   const [query, setQuery] = useState('');
   const [variables, setVariables] = useState('');
+  const [headers, setHeaders] = useState('');
   const [result, setResult] = useState('');
   //const endpoint = 'https://rickandmortyapi.com/graphql';
-  const [fields, setFields] = useState([]);
+  const [types, setTypes] = useState([]);
 
   // get fields from type Character
   const getSchema = () => {
@@ -36,14 +54,16 @@ function EditorPanel() {
     `;
     request(endpoint, introspectionQuery)
       .then((data) => {
-        const t = data.__schema.queryType.fields;
-        setFields(t);
+        const types = data.__schema.queryType.fields;
+        setTypes(types);
       })
       .catch((error) => console.error(error));
   };
 
   const runRequest = () => {
-    request(endpoint, query, JSON.parse(variables))
+    const variablesJson = variables ? JSON.parse(variables) : null;
+    const headersJson = headers ? JSON.parse(headers) : null;
+    request(endpoint, query, variablesJson, headersJson)
       .then((data) => {
         setResult(JSON.stringify(data, null, 3));
       })
@@ -60,6 +80,10 @@ function EditorPanel() {
 
   const variablesChangeHandler = (value: string) => {
     setVariables(value);
+  };
+
+  const headersChangeHandler = (value: string) => {
+    setHeaders(value);
   };
 
   const explorerClickHandler = () => {
@@ -90,6 +114,7 @@ function EditorPanel() {
           <Editor
             onQueryChange={queryChangeHandler}
             onVariablesChange={variablesChangeHandler}
+            onHeadersChange={headersChangeHandler}
           ></Editor>
           <Viewer widthHalf={showExplorer} value={result}></Viewer>
           <div className="flex explorer-block">
@@ -107,7 +132,7 @@ function EditorPanel() {
                 }
               />
             </div>
-            {showExplorer ? <Explorer fields={fields}></Explorer> : <></>}
+            {showExplorer ? <Explorer types={types} endpoint={endpoint}></Explorer> : <></>}
           </div>
         </div>
       </div>

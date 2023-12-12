@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import './Item.css';
 import request, { gql } from 'graphql-request';
+import SchemaType from '../SchemaType/Type';
 
 interface ItemProps {
   item: {
     name: string;
-    description: string;
     type: {
       name: string;
       kind: string;
     };
   };
+  endpoint: string;
 }
 
 function Item(props: ItemProps) {
@@ -32,7 +33,7 @@ function Item(props: ItemProps) {
         }
       }
     `;
-    request('https://rickandmortyapi.com/graphql', introspectionQuery)
+    request(props.endpoint, introspectionQuery)
       .then((data) => {
         const t = data.__type ? data.__type.fields : [];
         setFields(t);
@@ -41,21 +42,23 @@ function Item(props: ItemProps) {
   };
 
   const itemClickHandler = () => {
-    //paste field name in text area
     getFields(props.item.type.name);
     setTypeVisible(!typeVisible);
   };
 
   return (
     <>
-      <div className="flex item" onClick={itemClickHandler}>
-        <div className="font-small margin-small" title={props.item.description}>
-          {props.item.name}
+      <div className="flex item">
+        <div className="font-small margin-small">{props.item.name}</div>
+        <div className="font-small type" onClick={itemClickHandler}>
+          [{props.item.type.name}]
         </div>
-        <div className="font-small margin-small">(...):</div>
-        <div className="font-small grey">[{props.item.type.name}]</div>
       </div>
-      {typeVisible ? fields?.map((item) => <div>{item.name}</div>) : <></>}
+      {typeVisible ? (
+        <SchemaType fields={fields} endpoint={props.endpoint}></SchemaType>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

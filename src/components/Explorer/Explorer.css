@@ -3,9 +3,19 @@
   max-width: 100%;
   background: white;
   position: relative;
+  max-height: 400px;
+  overflow: scroll;
 }
 
 .documentation-header {
   border-bottom: 1px solid rgb(240, 236, 229);
   margin-bottom: 12px;
+}
+
+.grey-text {
+  color: grey;
+}
+
+.types-block {
+  
 }
