@@ -11,11 +11,17 @@ function AboutProject() {
         <div className={style.wrapper}>
           <div className={style.text}>
             <h3> {lan === 'en' ? 'GraphiQL Project' : 'GraphiQL Проект'}</h3>
-            <p>
-              {lan === 'en'
-                ? DataAboutProgect.en.discription
-                : DataAboutProgect.ru.discription}
-            </p>
+            {lan === 'en'
+              ? DataAboutProgect.en.map((paragraph, index) => (
+                  <p key={index} className={style[index]}>
+                    {paragraph}
+                  </p>
+                ))
+              : DataAboutProgect.ru.map((paragraph, index) => (
+                  <p key={index} className={style[index]}>
+                    {paragraph}
+                  </p>
+                ))}
           </div>
           <p className={style.logo__wrapper}>
             <img src={Rss} className={style.logorss} alt="logorss" />

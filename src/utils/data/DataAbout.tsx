@@ -1,12 +1,47 @@
 export const DataAboutProgect = {
-  en: {
-    discription:
-      'Our team successfully created the GraphiQL application for working with GraphQL queries. Key features include: Welcome Page: Information about developers and the project. Sign In and Sign Up buttons. Automatic redirection on token expiration. Sign In / Sign Up Page:Buttons for authentication and registration. Client-side validation and automatic redirection. GraphiQL Page:Query editor, documentation, variable and header sections. Read-only response section. Ability to change the GraphQL endpoint. General Requirements: Localization, sticky header, API error display. Technical details: React 18, TypeScript, tests (80%+ coverage). Eslint, Prettier, Husky hooks. Results are available for review and evaluation. Results are available for review and evaluation',
-  },
-  ru: {
-    discription:
-      'Наша команда успешно создала приложение GraphiQL для работы с GraphQL-запросами. Основные функции: Welcome Страница: Информация о разработчиках и проекте. Кнопки Sign In и Sign Up.Автоматическое перенаправление при истечении срока токена. Sign In / Sign Up Страница: Кнопки для авторизации и регистрации. Клиентская валидация и автоматическое перенаправление.GraphiQL Страница: Редактор запросов, документация, секции переменных и заголовков. Секция ответа в режиме "только чтение". Возможность смены GraphQL-эндпоинта. Общие Требования: Локализация, липкий заголовок, отображение ошибок API. Технические детали: React 18, TypeScript, тесты (покрытие 80%+). Eslint, Prettier, Husky hooks. Результаты доступны для проверки и оценки.',
-  },
+  en: [
+    'Our team successfully created the GraphiQL application for working with GraphQL queries.',
+    'Introducing the main functions of our development.',
+    'Welcome Page:',
+    '- Information about developers and the project.',
+    'Sign In and Sign Up buttons:',
+    '- Redirection to login and registration pages',
+    '- Automatic redirection on token expiration.',
+    '- Implemented in the welcome page and in the page header',
+    'Sign In / Sign Up Page:',
+    '- Buttons for authentication and registration.',
+    '- Client-side validation and automatic redirection.',
+    'GraphiQL Page:',
+    '- Query editor, documentation, variable and header sections.',
+    '- Read-only response section. Ability to change the GraphQL endpoint.',
+    'General Requirements:',
+    '- Localization, sticky header, API error display.',
+    'Technical details:',
+    '- React 18, TypeScript, tests (80%+ coverage). Eslint, Prettier, Husky hooks.',
+    'Results are available for review and evaluation.',
+  ],
+  ru: [
+    'Наша команда успешно создала приложение GraphiQL для работы с GraphQL-запросами.',
+    'Представляем основные функции нашей разработки.',
+    'Welcome Страница:',
+    '- Информация о разработчиках и проекте.',
+    'Кнопки Sign In и Sign Up:',
+    '- Реализовавны в странице приветствия и в хедере страницы',
+    '- Перенаправление на страницы логина и регистрации',
+    '- Автоматическое перенаправление при истечении срока токена.',
+    'Sign In / Sign Up Страница:',
+    '- Кнопки для авторизации и регистрации.',
+    '- Клиентская валидация и автоматическое перенаправление.',
+    'GraphiQL Страница:',
+    '- Редактор запросов, документация, секции переменных и заголовков.',
+    '- Секция ответа в режиме "только чтение".',
+    '- Возможность смены GraphQL-эндпоинта.',
+    'Общие Требования:',
+    '- Локализация, липкий заголовок, отображение ошибок API.',
+    'Технические детали:',
+    '- React 18, TypeScript, тесты (покрытие 80%+). Eslint, Prettier, Husky hooks.',
+    'Результаты доступны для проверки и оценки.',
+  ],
 };
 
 export const DataAboutCourse = {
