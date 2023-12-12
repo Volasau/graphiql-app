@@ -12,6 +12,7 @@ import { UserContext, UserContextType } from '../../context/authContext';
 import { LoginContext, LoginContextType } from '../../context/loginContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import style from './LoginComp.module.css';
 
 function LoginComp() {
   const {
@@ -49,31 +50,45 @@ function LoginComp() {
   };
 
   return (
-    <>
+    <div className={style.subContainer}>
       <ToastContainer />
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit(loginHandler)}>
-        <label>Email</label>
-        <input id="emailLog" type="email" {...register('email')} />
-        {errors.email && (
-          <p>
-            <small className="text-danger">{errors.email.message}</small>
+      <h1 className={style.loginHeader}>Please Sign In</h1>
+      <form onSubmit={handleSubmit(loginHandler)} className={style.loginForm}>
+        <div className={style.emailLogin}>
+          <input
+            id="emailLog"
+            type="email"
+            {...register('email')}
+            placeholder="Email"
+          />
+          <p className={style.errorText}>
+            {errors.email && (
+              <small className={style.textDanger}>{errors.email.message}</small>
+            )}
           </p>
-        )}
-        <div>
-          <label>Password</label>
-          <input id="passwordLog" type="password" {...register('password')} />
-          {errors.password && (
-            <p>
-              <small className="text-danger">{errors.password.message}</small>
-            </p>
-          )}
         </div>
-        <button type="submit">Submit</button>
+        <div className={style.passwordLogin}>
+          <input
+            id="passwordLog"
+            type="password"
+            {...register('password')}
+            placeholder="Password"
+          />
+          <p className={style.errorText}>
+            {errors.password && (
+              <pre>
+                <small className={style.textDanger}>
+                  {errors.password.message}
+                </small>
+              </pre>
+            )}
+          </p>
+        </div>
+        <button type="submit" className={`${style.loginBtn}`}>
+          Login
+        </button>
       </form>
-      <h4>User Logged In:</h4>
-      {userValue.user !== null ? userValue.user.email : null}
-    </>
+    </div>
   );
 }
 export default LoginComp;
