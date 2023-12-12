@@ -93,7 +93,10 @@ function Layout() {
           </Link>
           {loginValue.login ? (
             <>
-              <button onClick={handleLogoutClick} className={style.link}>
+              <button
+                onClick={handleLogoutClick}
+                className={`${style.link} ${style.btn}`}
+              >
                 Logout
               </button>
             </>
@@ -110,13 +113,13 @@ function Layout() {
           <div className={style.link}>
             <button
               onClick={handleLanClickEn}
-              className={lan === 'en' ? style.active : ''}
+              className={`${lan === 'en' ? style.active : ''} ${style.btn_lan}`}
             >
               EN
             </button>
             <button
               onClick={handleLanClickRu}
-              className={lan === 'ru' ? style.active : ''}
+              className={`${lan === 'ru' ? style.active : ''} ${style.btn_lan}`}
             >
               RU
             </button>
