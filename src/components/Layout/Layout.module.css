@@ -1,3 +1,13 @@
+button {
+  /* border: none; */
+  outline: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  /* Дополнительные стили, если необходимо */
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -7,18 +17,40 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .link {
   display: flex;
   align-items: center;
-}
-
-.active {
-  background-color: rgb(182, 187, 196);
+  transition: all 0.3s ease;
 }
 
 .scrolling {
   background-color: rgb(240, 236, 229);
+}
+
+.btn {
+  font-size: 15px;
+  color: black;
+  padding: 8px 16px;
+  background-color: rgb(224, 219, 191);
+
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: rgb(226, 199, 154);
+}
+
+.btn_lan {
+  color: black;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: rgb(224, 219, 191);
+}
+
+.active {
+  background-color: rgb(226, 199, 154);
 }
