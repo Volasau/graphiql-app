@@ -8,7 +8,7 @@ export const prettify = (value: string): string => {
 };
 
 // add spaces to the beggining of the line depending on level
-const formatStringWithSpaces = (value: string): string => {
+export const formatStringWithSpaces = (value: string): string => {
   const spaceCount = 3;
   let res = '';
   let level = 0;
