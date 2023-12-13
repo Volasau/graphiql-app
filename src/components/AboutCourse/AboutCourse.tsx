@@ -7,7 +7,7 @@ function AboutCourse() {
   const { lan } = useLanguage();
   return (
     <>
-      <div className={style.container}>
+      <div data-testid="about_course" className={style.container}>
         <div className={style.wrapper}>
           <div className={style.text}>
             <h3>{lan === 'en' ? 'About Course' : 'О курсе'}</h3>
