@@ -3,7 +3,7 @@ import style from './LoginPage.module.css';
 function Login() {
   return (
     <>
-      <div className={style.container}>
+      <div data-testid="login" className={style.container}>
         <LoginComp />
       </div>
     </>
