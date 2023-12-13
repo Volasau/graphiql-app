@@ -33,7 +33,7 @@ function Graphi() {
   }, [loginValue.login, navigate]);
   return (
     <>
-      <div className={style.container}>
+      <div data-testid="graphiql" className={style.container}>
         <h1>GraphiQL</h1>
       </div>
       <div className={style.editorPanel}>

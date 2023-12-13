@@ -1,21 +1,21 @@
 import { describe, expect, test } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
-import Welcome from '../../pages/Welcome/Welcome';
 import { LanguageProvider } from '../../context/contextLanguage';
 import { MemoryRouter } from 'react-router-dom';
+import Graphi from '../../pages/GraphiQl/Graphi';
 
-describe('Test Welcome', () => {
+describe('Test Graphi', () => {
   test('Сhecked ', () => {
     act(() => {
       render(
         <MemoryRouter>
           <LanguageProvider>
-            <Welcome />
+            <Graphi />
           </LanguageProvider>
         </MemoryRouter>
       );
     });
-    const welcome = screen.getByTestId('welcome');
-    expect(welcome).toBeTruthy();
+    const Graphiql = screen.getByTestId('graphiql');
+    expect(Graphiql).toBeTruthy();
   });
 });
