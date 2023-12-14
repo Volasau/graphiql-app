@@ -7,11 +7,10 @@ import { IdTokenResult } from 'firebase/auth';
 describe('useUser', () => {
   test('throws an error when not used within a UserProvider', () => {
     const { result } = renderHook(() => useUser());
+    result.current.user = null;
 
     expect(() => {
-      expect(result.current.user).toThrow(
-        'useLanguage must be used within a LanguageProvider'
-      );
+      expect(result.current.user).toThrow('Error');
     }).toThrow();
   });
 

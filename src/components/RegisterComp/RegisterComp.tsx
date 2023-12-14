@@ -51,7 +51,7 @@ const RegisterComp = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onhandleSubmit)}>
+      <form data-testid="form__registr" onSubmit={handleSubmit(onhandleSubmit)}>
         <h5>Create an account</h5>
         <div>
           <div>
