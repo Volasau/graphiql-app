@@ -7,14 +7,21 @@ import { prettify } from '../../utils/prettifier';
 interface EditorProps {
   value?: string;
   readonly?: boolean;
+  error?: boolean;
   onQueryChange?(code: string): void;
   onVariablesChange?(variables: string): void;
   onHeadersChange?(variables: string): void;
 }
 
 function Editor(props: EditorProps) {
-  const { value, onVariablesChange, onQueryChange, readonly, onHeadersChange } =
-    props;
+  const {
+    value,
+    onVariablesChange,
+    onQueryChange,
+    readonly,
+    error,
+    onHeadersChange,
+  } = props;
   const { lan } = useLanguage();
   const [variablesVisible, setVariablesVisible] = useState(true);
   const [headersVisible, setHeadersVisible] = useState(false);
@@ -93,8 +100,10 @@ function Editor(props: EditorProps) {
         <CodeMirror
           className={
             readonly
-              ? 'position-readonly width100 max-width CodeMirror'
-              : 'width100 max-width CodeMirror '
+              ? error
+                ? 'position-readonly width100 max-width CodeMirror'
+                : 'position-readonly width100 max-width'
+              : 'width100 max-width'
           }
           value={text}
           height="320px"
