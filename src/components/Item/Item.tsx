@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './Item.css';
-import request, { gql } from 'graphql-request';
 import SchemaType from '../SchemaType/Type';
 
 interface ItemProps {
@@ -18,8 +17,9 @@ function Item(props: ItemProps) {
   const [typeVisible, setTypeVisible] = useState(false);
   const [fields, setFields] = useState([]);
 
+  // get fields from given type
   const getFields = (type: string) => {
-    const introspectionQuery = gql`
+    const introspectionQuery = `
       query {
         __type(name: "${type}") {
           name
@@ -33,10 +33,19 @@ function Item(props: ItemProps) {
         }
       }
     `;
-    request(props.endpoint, introspectionQuery)
-      .then((data) => {
-        const t = data.__type ? data.__type.fields : [];
-        setFields(t);
+
+    fetch(props.endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: introspectionQuery }),
+    })
+      .then((response) => {
+        response.json().then(({ data }) => {
+          const t = data.__type ? data.__type.fields : [];
+          setFields(t);
+        });
       })
       .catch((error) => console.error(error));
   };

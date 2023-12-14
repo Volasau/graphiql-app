@@ -34,7 +34,7 @@ function Editor(props: EditorProps) {
     if (readonly) {
       setText(value);
     }
-  });
+  }, [readonly, value]);
 
   const setInitialQuery = (event: React.MouseEvent<HTMLElement>) => {
     if (!event.target.innerText.trim().length) {
