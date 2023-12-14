@@ -29,6 +29,7 @@ function EditorPanel() {
   const [variables, setVariables] = useState('');
   const [headers, setHeaders] = useState('');
   const [result, setResult] = useState('');
+  const [errorResult, setErrorResult] = useState(false);
   //const endpoint = 'https://rickandmortyapi.com/graphql';
   const [types, setTypes] = useState([]);
 
@@ -79,8 +80,16 @@ function EditorPanel() {
       }),
     })
       .then((response) => {
-        response.json().then(({ data }) => {
-          setResult(JSON.stringify(data, null, 3));
+        response.json().then((res) => {
+          if (response.ok) {
+            setResult(JSON.stringify(res.data, null, 3));
+          } else {
+            const err = res.errors[0];
+            setErrorResult(true);
+            setResult(
+              `Error: ${err.message} at line ${err.locations[0].line}, column ${err.locations[0].column}`
+            );
+          }
         });
       })
       .catch((error) => console.error(error));
@@ -128,12 +137,13 @@ function EditorPanel() {
         </div>
         <div className="color-light flex-wrap">
           <Editor
+            error={false}
             onQueryChange={queryChangeHandler}
             onVariablesChange={variablesChangeHandler}
             onHeadersChange={headersChangeHandler}
           ></Editor>
           <div className={showExplorer ? 'width-half' : 'width-full'}>
-            <Editor value={result} readonly={true}></Editor>
+            <Editor value={result} readonly={true} error={errorResult}></Editor>
           </div>
           <div className="flex explorer-block">
             <div

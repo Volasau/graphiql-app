@@ -39,3 +39,7 @@
   position: relative;
   top: 28px;
 }
+
+.CodeMirror * {
+  color:red;
+  }
