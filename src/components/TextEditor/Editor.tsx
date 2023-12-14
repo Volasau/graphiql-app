@@ -1,43 +1,59 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 import CodeMirror from '@uiw/react-codemirror';
 import './Editor.css';
 import { prettify } from '../../utils/prettifier';
 
 interface EditorProps {
-  onQueryChange(code: string): void;
-  onVariablesChange(variables: string): void;
-  onHeadersChange(variables: string): void;
+  value?: string;
+  readonly?: boolean;
+  onQueryChange?(code: string): void;
+  onVariablesChange?(variables: string): void;
+  onHeadersChange?(variables: string): void;
 }
 
 function Editor(props: EditorProps) {
+  const { value, onVariablesChange, onQueryChange, readonly, onHeadersChange } =
+    props;
   const { lan } = useLanguage();
   const [variablesVisible, setVariablesVisible] = useState(true);
   const [headersVisible, setHeadersVisible] = useState(false);
   const [showParameters, setShowParameters] = useState(false);
-  const [value, setValue] = useState('');
+  const [text, setText] = useState(value);
   const [variables, setVariables] = useState('');
   const [headers, setHeaders] = useState('');
 
   const codeChange = (value: string) => {
-    setValue(value);
-    props.onQueryChange(value);
+    setText(value);
+    if (onQueryChange) {
+      onQueryChange(value);
+    }
   };
+
+  useEffect(() => {
+    if (readonly) {
+      setText(value);
+    }
+  });
 
   const setInitialQuery = (event: React.MouseEvent<HTMLElement>) => {
     if (!event.target.innerText.trim().length) {
-      setValue('query Example {}');
+      setText('query Example {}');
     }
   };
 
   const variablesChange = (value: string) => {
     setVariables(value);
-    props.onVariablesChange(value);
+    if (onVariablesChange) {
+      onVariablesChange(value);
+    }
   };
 
   const headersChange = (value: string) => {
     setHeaders(value);
-    props.onHeadersChange(value);
+    if (onHeadersChange) {
+      onHeadersChange(value);
+    }
   };
 
   const variablesClickHandler = () => {
@@ -55,53 +71,71 @@ function Editor(props: EditorProps) {
   };
 
   const runPrettify = () => {
-    setValue(prettify(value));
+    setText(prettify(value));
   };
 
   return (
     <>
       <div className="max-width">
-        <div title="Prettify" onClick={runPrettify} className="prettify-button">
-          <img className="icon" src="src/assets/images/prettifyIcon.png" />
-        </div>
+        {!readonly ? (
+          <div
+            title="Prettify"
+            onClick={runPrettify}
+            className="prettify-button"
+          >
+            <img className="icon" src="src/assets/images/prettifyIcon.png" />
+          </div>
+        ) : (
+          <></>
+        )}
         <CodeMirror
-          className="width100 max-width CodeMirror"
-          value={value}
+          className={
+            readonly
+              ? 'position-readonly width100 max-width CodeMirror'
+              : 'width100 max-width CodeMirror '
+          }
+          value={text}
           height="320px"
           onChange={codeChange}
           onMouseDown={setInitialQuery}
         />
-        <div className="flex-buttons">
-          <div className="flex">
-            <div
-              className={variablesVisible ? 'active tab-header' : 'tab-header'}
-              onClick={variablesClickHandler}
-            >
-              {lan === 'en' ? 'Variables' : 'Переменные'}
+        {!readonly ? (
+          <div className="flex-buttons">
+            <div className="flex">
+              <div
+                className={
+                  variablesVisible ? 'active tab-header' : 'tab-header'
+                }
+                onClick={variablesClickHandler}
+              >
+                {lan === 'en' ? 'Variables' : 'Переменные'}
+              </div>
+              <div
+                className={headersVisible ? 'active tab-header' : 'tab-header'}
+                onClick={headersClickHandler}
+              >
+                {lan === 'en' ? 'Headers' : 'Заголовки'}
+              </div>
             </div>
             <div
-              className={headersVisible ? 'active tab-header' : 'tab-header'}
-              onClick={headersClickHandler}
+              title={showParameters ? 'collapse' : 'expand'}
+              className="arrow-button"
+              onClick={parametersClickHandler}
             >
-              {lan === 'en' ? 'Headers' : 'Заголовки'}
+              <img
+                className="icon"
+                src={
+                  showParameters
+                    ? 'src/assets/images/collapseVerticalIcon.png'
+                    : 'src/assets/images/expandVerticalIcon.png'
+                }
+              />
             </div>
           </div>
-          <div
-            title={showParameters ? 'collapse' : 'expand'}
-            className="arrow-button"
-            onClick={parametersClickHandler}
-          >
-            <img
-              className="icon"
-              src={
-                showParameters
-                  ? 'src/assets/images/collapseVerticalIcon.png'
-                  : 'src/assets/images/expandVerticalIcon.png'
-              }
-            />
-          </div>
-        </div>
-        {showParameters && variablesVisible ? (
+        ) : (
+          <></>
+        )}
+        {!readonly && showParameters && variablesVisible ? (
           <CodeMirror
             className="paddingSmall font-small border width100 max-width"
             value={variables}
