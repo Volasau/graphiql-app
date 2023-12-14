@@ -56,6 +56,7 @@ const RegisterComp = () => {
       <ToastContainer />
       <h1 className={style.registerHeader}>Create an account</h1>
       <form
+        data-testid="form__registr"
         onSubmit={handleSubmit(onhandleSubmit)}
         className={style.registerForm}
       >

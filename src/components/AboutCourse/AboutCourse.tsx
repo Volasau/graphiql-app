@@ -7,14 +7,18 @@ function AboutCourse() {
   const { lan } = useLanguage();
   return (
     <>
-      <div className={style.container}>
+      <div data-testid="about_course" className={style.container}>
         <div className={style.wrapper}>
           <div className={style.text}>
             <h3>{lan === 'en' ? 'About Course' : 'О курсе'}</h3>
-            <p>
-              {lan === 'en'
-                ? DataAboutCourse.en.discription
-                : DataAboutCourse.ru.discription}
+            <p className={style.title}>
+              {lan === 'en' ? DataAboutCourse.en.p1 : DataAboutCourse.ru.p1}
+            </p>
+            <p className={style.texte}>
+              {lan === 'en' ? DataAboutCourse.en.p2 : DataAboutCourse.ru.p2}
+            </p>
+            <p className={style.list}>
+              {lan === 'en' ? DataAboutCourse.en.p3 : DataAboutCourse.ru.p3}
             </p>
           </div>
           <p className={style.logo__wrapper}>

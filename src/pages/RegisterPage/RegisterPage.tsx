@@ -4,7 +4,7 @@ import style from './RegisterPage.module.css';
 function Registration() {
   return (
     <>
-      <div className={style.container}>
+      <div data-testid="registration" className={style.container}>
         <RegisterComp />
       </div>
     </>
