@@ -6,6 +6,8 @@ import { prettify } from '../../utils/prettifier';
 
 interface EditorProps {
   onQueryChange(code: string): void;
+  onVariablesChange(variables: string): void;
+  onHeadersChange(variables: string): void;
 }
 
 function Editor(props: EditorProps) {
@@ -14,12 +16,28 @@ function Editor(props: EditorProps) {
   const [headersVisible, setHeadersVisible] = useState(false);
   const [showParameters, setShowParameters] = useState(false);
   const [value, setValue] = useState('');
-  const variables = '';
-  const headers = '';
+  const [variables, setVariables] = useState('');
+  const [headers, setHeaders] = useState('');
 
   const codeChange = (value: string) => {
     setValue(value);
     props.onQueryChange(value);
+  };
+
+  const setInitialQuery = (event: React.MouseEvent<HTMLElement>) => {
+    if (!event.target.innerText.trim().length) {
+      setValue('query Example {}');
+    }
+  };
+
+  const variablesChange = (value: string) => {
+    setVariables(value);
+    props.onVariablesChange(value);
+  };
+
+  const headersChange = (value: string) => {
+    setHeaders(value);
+    props.onHeadersChange(value);
   };
 
   const variablesClickHandler = () => {
@@ -51,6 +69,7 @@ function Editor(props: EditorProps) {
           value={value}
           height="320px"
           onChange={codeChange}
+          onMouseDown={setInitialQuery}
         />
         <div className="flex-buttons">
           <div className="flex">
@@ -86,6 +105,7 @@ function Editor(props: EditorProps) {
           <CodeMirror
             className="paddingSmall font-small border width100 max-width"
             value={variables}
+            onChange={variablesChange}
             height="100px"
             width="600px"
             placeholder={
@@ -99,6 +119,7 @@ function Editor(props: EditorProps) {
           <CodeMirror
             className="paddingSmall font-small border width100 max-width"
             value={headers}
+            onChange={headersChange}
             height="100px"
             width="600px"
             placeholder={

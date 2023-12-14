@@ -6,26 +6,47 @@ import { request, gql } from 'graphql-request';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 
+export interface Field {
+  name: string;
+  type: {
+    name: string;
+    kind: string;
+  };
+}
+
+export interface SchemaData {
+  name: string;
+  description: string;
+  type: {
+    name: string;
+    kind: string;
+  };
+}
+
 function EditorPanel() {
   const { lan } = useLanguage();
   const [showExplorer, setShowExplorer] = useState(false);
   const [endpoint, setEndpoint] = useState('');
   const [query, setQuery] = useState('');
+  const [variables, setVariables] = useState('');
+  const [headers, setHeaders] = useState('');
   const [result, setResult] = useState('');
   //const endpoint = 'https://rickandmortyapi.com/graphql';
-  const [fields, setFields] = useState([]);
+  const [types, setTypes] = useState([]);
 
   // get fields from type Character
   const getSchema = () => {
     const introspectionQuery = gql`
       query {
-        __type(name: "Character") {
-          name
-          fields {
-            name
-            type {
+        __schema {
+          queryType {
+            fields {
               name
-              kind
+              description
+              type {
+                name
+                kind
+              }
             }
           }
         }
@@ -33,14 +54,16 @@ function EditorPanel() {
     `;
     request(endpoint, introspectionQuery)
       .then((data) => {
-        const t = data.__type.fields;
-        setFields(t);
+        const types = data.__schema.queryType.fields;
+        setTypes(types);
       })
       .catch((error) => console.error(error));
   };
 
   const runRequest = () => {
-    request(endpoint, query)
+    const variablesJson = variables ? JSON.parse(variables) : null;
+    const headersJson = headers ? JSON.parse(headers) : null;
+    request(endpoint, query, variablesJson, headersJson)
       .then((data) => {
         setResult(JSON.stringify(data, null, 3));
       })
@@ -53,6 +76,14 @@ function EditorPanel() {
 
   const queryChangeHandler = (value: string) => {
     setQuery(value);
+  };
+
+  const variablesChangeHandler = (value: string) => {
+    setVariables(value);
+  };
+
+  const headersChangeHandler = (value: string) => {
+    setHeaders(value);
   };
 
   const explorerClickHandler = () => {
@@ -80,7 +111,11 @@ function EditorPanel() {
           </div>
         </div>
         <div className="color-light flex-wrap">
-          <Editor onQueryChange={queryChangeHandler}></Editor>
+          <Editor
+            onQueryChange={queryChangeHandler}
+            onVariablesChange={variablesChangeHandler}
+            onHeadersChange={headersChangeHandler}
+          ></Editor>
           <Viewer widthHalf={showExplorer} value={result}></Viewer>
           <div className="flex explorer-block">
             <div
@@ -97,7 +132,7 @@ function EditorPanel() {
                 }
               />
             </div>
-            {showExplorer ? <Explorer fields={fields}></Explorer> : <></>}
+            {showExplorer ? <Explorer types={types} endpoint={endpoint}></Explorer> : <></>}
           </div>
         </div>
       </div>

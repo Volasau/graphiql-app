@@ -3,7 +3,7 @@
   justify-content: start;
 }
 
-.grey {
+.type {
   color: rgb(49, 48, 77);
 }
 
@@ -18,4 +18,10 @@
 .item:hover {
   cursor: pointer;
   background-color: rgb(240, 236, 229);
+}
+
+.type:hover {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
 }

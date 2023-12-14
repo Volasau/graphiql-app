@@ -23,6 +23,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
     "@uiw/react-codemirror": "^4.21.21",
+    "antd": "^5.12.2",
     "firebase": "^10.7.1",
     "graphql-request": "^6.1.0",
     "react": "^18.2.0",
