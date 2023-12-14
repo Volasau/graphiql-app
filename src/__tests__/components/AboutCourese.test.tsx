@@ -6,9 +6,6 @@ import { DataAboutCourse } from '../../utils/data/DataAbout';
 
 describe('AboutCourse component', () => {
   test('renders AboutCourse component with English content', () => {
-    const mockUseLanguage = vi.fn(() => ({ lan: 'ru' }));
-    mockUseLanguage.mockReturnValueOnce({ lan: 'ru' });
-
     render(
       <LanguageProvider>
         <AboutCourse />
