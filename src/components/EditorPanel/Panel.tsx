@@ -1,6 +1,5 @@
 import './Panel.css';
 import Editor from '../TextEditor/Editor';
-import Viewer from '../ResponseViewer/Viewer';
 import Explorer from '../Explorer/Explorer';
 import { request, gql } from 'graphql-request';
 import { ChangeEvent, useState } from 'react';
@@ -116,7 +115,9 @@ function EditorPanel() {
             onVariablesChange={variablesChangeHandler}
             onHeadersChange={headersChangeHandler}
           ></Editor>
-          <Viewer widthHalf={showExplorer} value={result}></Viewer>
+          <div className={showExplorer ? 'width-half' : 'width-full'}>
+            <Editor value={result} readonly={true}></Editor>
+          </div>
           <div className="flex explorer-block">
             <div
               title={showExplorer ? 'collapse' : 'expand'}
@@ -132,7 +133,11 @@ function EditorPanel() {
                 }
               />
             </div>
-            {showExplorer ? <Explorer types={types} endpoint={endpoint}></Explorer> : <></>}
+            {showExplorer ? (
+              <Explorer types={types} endpoint={endpoint}></Explorer>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

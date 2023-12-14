@@ -34,3 +34,8 @@
 .margin-rightXS {
   margin-right: 6px;
 }
+
+.position-readonly {
+  position: relative;
+  top: 28px;
+}
