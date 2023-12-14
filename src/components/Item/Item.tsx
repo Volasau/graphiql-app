@@ -48,7 +48,7 @@ function Item(props: ItemProps) {
 
   return (
     <>
-      <div className="flex item">
+      <div className="flex item" data-testid="item">
         <div className="font-small margin-small">{props.item.name}</div>
         <div className="font-small type" onClick={itemClickHandler}>
           [{props.item.type.name}]

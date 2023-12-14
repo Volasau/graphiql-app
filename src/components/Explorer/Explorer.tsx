@@ -12,7 +12,7 @@ function Explorer(props: ExplorerProps) {
   const { lan } = useLanguage();
   return (
     <>
-      <div className="explorer-panel">
+      <div data-testid="expoler" className="explorer-panel">
         <div className="font-large documentation-header">
           {lan === 'en' ? 'Documentation' : 'Документация'}
         </div>

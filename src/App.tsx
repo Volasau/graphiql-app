@@ -10,7 +10,7 @@ import Graphi from './pages/GraphiQl/Graphi';
 function App() {
   return (
     <>
-      <div>
+      <div data-testid="app">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Welcome />} />

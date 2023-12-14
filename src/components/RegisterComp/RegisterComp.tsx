@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { IFormInput, userSchema } from '../../functions/UserValidation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginContext, LoginContextType } from '../../context/loginContext';
+import style from './RegisterComp.module.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 const RegisterComp = () => {
   const loginValue = useContext<LoginContextType>(LoginContext);
@@ -41,78 +43,94 @@ const RegisterComp = () => {
       });
       loginValue.setLogin(true);
       navigate('/graphiql');
-      alert('User Created Successfully');
+      toast.success('User created successfully');
+      toast.success('You login');
     } catch (error) {
       console.log(error);
-      alert('User created failed');
-      alert(error);
+      toast.error('User creation failed');
     }
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onhandleSubmit)}>
-        <h5>Create an account</h5>
+    <div className={style.subContainer}>
+      <ToastContainer />
+      <h1 className={style.registerHeader}>Create an account</h1>
+      <form
+        data-testid="form__registr"
+        onSubmit={handleSubmit(onhandleSubmit)}
+        className={style.registerForm}
+      >
         <div>
-          <div>
-            <label>Name</label>
+          <div className={style.nameReg}>
             <input
               id="nameReg"
               type="name"
-              className={`form-control ${errors.name && 'invalid'}`}
               defaultValue=""
+              placeholder="Name"
               {...register('name')}
             />
-            {errors.name && (
-              <p>
-                <small className="text-danger">{errors.name.message}</small>
-              </p>
-            )}
+            <p className={style.errorText}>
+              {errors.name && (
+                <small className={style.textDanger}>
+                  {errors.name.message}
+                </small>
+              )}
+            </p>
           </div>
-          <div>
-            <label>E-mail</label>
-            <input id="emailReg" type="email" {...register('email')} />
-            {errors.email && (
-              <p>
-                <small className="text-danger">{errors.email.message}</small>
-              </p>
-            )}
+          <div className={style.emailReg}>
+            <input
+              id="emailReg"
+              type="email"
+              placeholder="Email"
+              {...register('email')}
+            />
+            <p className={style.errorText}>
+              {errors.email && (
+                <small className={style.textDanger}>
+                  {errors.email.message}
+                </small>
+              )}
+            </p>
           </div>
-          <div>
-            <label>Password</label>
+          <div className={style.passwordReg}>
             <input
               id="passwordReg"
               type="password"
-              className={`form-control ${errors.password && 'invalid'}`}
+              placeholder="Password"
               {...register('password')}
             />
-            {errors.password && (
-              <p>
-                <small className="text-danger">{errors.password.message}</small>
-              </p>
-            )}
+            <p className={style.errorText}>
+              {errors.password && (
+                <pre>
+                  <small className={style.textDanger}>
+                    {errors.password.message}
+                  </small>
+                </pre>
+              )}
+            </p>
           </div>
-          <div>
-            <label>Confirm password</label>
+          <div className={style.confirmPasswordReg}>
             <input
               id="confirmPasswordReg"
               type="password"
+              placeholder="Confirm password"
               {...register('confirmPassword')}
               onPaste={(e) => {
                 e.preventDefault();
                 return false;
               }}
-              className={`form-control ${errors.confirmPassword && 'invalid'}`}
             />
-            {errors.confirmPassword && (
-              <p>
-                <small className="text-danger">
+            <p className={style.errorText}>
+              {errors.confirmPassword && (
+                <small className={style.textDanger}>
                   {errors.confirmPassword.message}
                 </small>
-              </p>
-            )}
+              )}
+            </p>
           </div>
-          <input type="submit" value="Sign-up" />
+          <button type="submit" className={`${style.regBtn}`}>
+            Sign-up
+          </button>
         </div>
       </form>
     </div>

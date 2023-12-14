@@ -15,5 +15,14 @@
 }
 
 .text {
-  max-width: 1100px;
+  max-width: 650px;
+}
+
+.list {
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.title {
+  margin-bottom: 5px;
 }
