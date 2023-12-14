@@ -71,7 +71,9 @@ function Editor(props: EditorProps) {
   };
 
   const runPrettify = () => {
-    setText(prettify(value));
+    if (value) {
+      setText(prettify(value));
+    }
   };
 
   return (
