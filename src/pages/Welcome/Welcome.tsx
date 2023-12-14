@@ -7,7 +7,7 @@ import style from './Welcome.module.css';
 function Welcome() {
   return (
     <>
-      <div className={style.wrapper}>
+      <div data-testid="welcome" className={style.wrapper}>
         <WelcomeLinks />
         <AboutCourse />
         <AboutProject />

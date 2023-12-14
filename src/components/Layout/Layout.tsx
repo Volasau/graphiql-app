@@ -79,6 +79,7 @@ function Layout() {
       <div>
         <ToastContainer />
         <header
+          data-testid="header"
           className={`${style.container} ${scrolling ? style.scrolling : ''}`}
         >
           <Link to="/" className={style.link}>
