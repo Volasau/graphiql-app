@@ -1,7 +1,6 @@
 import './Panel.css';
 import Editor from '../TextEditor/Editor';
 import Explorer from '../Explorer/Explorer';
-import { request, gql } from 'graphql-request';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 
@@ -33,9 +32,9 @@ function EditorPanel() {
   //const endpoint = 'https://rickandmortyapi.com/graphql';
   const [types, setTypes] = useState([]);
 
-  // get fields from type Character
+  // get types
   const getSchema = () => {
-    const introspectionQuery = gql`
+    const introspectionQuery = `
       query {
         __schema {
           queryType {
@@ -51,10 +50,18 @@ function EditorPanel() {
         }
       }
     `;
-    request(endpoint, introspectionQuery)
-      .then((data) => {
-        const types = data.__schema.queryType.fields;
-        setTypes(types);
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: introspectionQuery }),
+    })
+      .then((response) => {
+        response.json().then(({ data }) => {
+          const types = data.__schema.queryType.fields;
+          setTypes(types);
+        });
       })
       .catch((error) => console.error(error));
   };
@@ -62,9 +69,19 @@ function EditorPanel() {
   const runRequest = () => {
     const variablesJson = variables ? JSON.parse(variables) : null;
     const headersJson = headers ? JSON.parse(headers) : null;
-    request(endpoint, query, variablesJson, headersJson)
-      .then((data) => {
-        setResult(JSON.stringify(data, null, 3));
+
+    fetch(endpoint, {
+      method: 'POST',
+      headers: headersJson,
+      body: JSON.stringify({
+        query: query,
+        variables: variablesJson,
+      }),
+    })
+      .then((response) => {
+        response.json().then(({ data }) => {
+          setResult(JSON.stringify(data, null, 3));
+        });
       })
       .catch((error) => console.error(error));
   };
