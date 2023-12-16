@@ -4,10 +4,13 @@ export const prettify = (value: string): string => {
 
   // add space between a word and opening curly brace
   res = res.replace(/([a-zA-Z]){/g, ' {\n');
+  //remove empty lines
+  res = res.replace(/^\s*\n/gm, '');
+
   return res;
 };
 
-// add spaces to the beggining of the line depending on level
+// add spaces to the begining of the line depending on level
 export const formatStringWithSpaces = (value: string): string => {
   const spaceCount = 3;
   let res = '';
