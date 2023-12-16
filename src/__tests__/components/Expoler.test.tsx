@@ -10,7 +10,7 @@ describe('Test Login page', () => {
       render(
         <MemoryRouter>
           <LanguageProvider>
-            <Explorer fields={[]} />
+            <Explorer types={[]} endpoint={''} />
           </LanguageProvider>
         </MemoryRouter>
       );
