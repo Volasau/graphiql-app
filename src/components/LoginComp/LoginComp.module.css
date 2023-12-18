@@ -44,14 +44,17 @@ small,
 .loginBtn {
   margin: 20px 0 0 60px;
   border-radius: 4px;
-  border: 1px solid rgb(182, 187, 196);
-  background-color: rgb(240, 236, 229);
-  color: rgb(49, 48, 77);
+  background-color: rgb(224, 219, 191);
+  color: black;
   font-weight: bold;
   padding: 12px 45px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  transition: transform 80ms ease-in;
+  transition: all 80ms ease-in;
+}
+
+.loginBtn:hover {
+  background-color: rgb(226, 199, 154);
 }
 
 .loginBtn:active {

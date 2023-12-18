@@ -11,7 +11,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Layout() {
-  //временно устанавливаем в ручную что пользователь не авторизован
   const userValue = useContext<UserContextType>(UserContext);
   const loginValue = useContext<LoginContextType>(LoginContext);
 
