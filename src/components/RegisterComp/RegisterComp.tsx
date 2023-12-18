@@ -99,15 +99,15 @@ const RegisterComp = () => {
               placeholder="Password"
               {...register('password')}
             />
-            <p className={style.errorText}>
+            <div className={style.errorText}>
               {errors.password && (
-                <pre>
+                <p className={style.pre}>
                   <small className={style.textDanger}>
                     {errors.password.message}
                   </small>
-                </pre>
+                </p>
               )}
-            </p>
+            </div>
           </div>
           <div className={style.confirmPasswordReg}>
             <input

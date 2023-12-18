@@ -12,6 +12,7 @@ function SchemaType(props: TypeProps) {
     <>
       <div className="fields-block">
         {props.fields?.map((item) => (
+          // eslint-disable-next-line react/jsx-key
           <Item item={item} endpoint={props.endpoint} />
         ))}
       </div>

@@ -26,7 +26,7 @@
 }
 
 small,
-pre {
+.pre {
   padding: 0;
   margin: 0;
   max-width: 230px;

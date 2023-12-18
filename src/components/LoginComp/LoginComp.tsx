@@ -74,15 +74,15 @@ function LoginComp() {
             {...register('password')}
             placeholder="Password"
           />
-          <p className={style.errorText}>
+          <div className={style.errorText}>
             {errors.password && (
-              <pre>
+              <p className={style.pre}>
                 <small className={style.textDanger}>
                   {errors.password.message}
                 </small>
-              </pre>
+              </p>
             )}
-          </p>
+          </div>
         </div>
         <button type="submit" className={`${style.loginBtn}`}>
           Login
