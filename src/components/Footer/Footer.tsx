@@ -1,6 +1,6 @@
 import style from './Footer.module.css';
-import LogoRss from '../../../public/RSS.png';
-import LogoGitHub from '../../../public/github-logo.png';
+import LogoRss from '../../assets/logo/RSS.png';
+import LogoGitHub from '../../assets/logo/github-logo.png';
 
 function Footer() {
   return (

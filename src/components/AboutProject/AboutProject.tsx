@@ -1,6 +1,6 @@
 import { DataAboutProgect } from '../../utils/data/DataAbout';
 import style from './AboutProject.module.css';
-import Rss from '../../../public/graphql-email-api.png';
+import Rss from '../../assets/logo/graphql-email-api.png';
 import { useLanguage } from '../../context/contextLanguage';
 
 function AboutProject() {

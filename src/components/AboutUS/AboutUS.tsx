@@ -1,7 +1,7 @@
 import style from './AboutUS.module.css';
-import Ryhor from '../../../public/photo/Ruhor.jpg';
-import Azim from '../../../public/photo/Azim.jpg';
-import Vera from '../../../public/photo/Vera.jpg';
+import Ryhor from '../../assets/photo/Ruhor.jpg';
+import Azim from '../../assets/photo/Azim.jpg';
+import Vera from '../../assets/photo/Vera.jpg';
 import { DataAboutUs } from '../../utils/data/DataAbout';
 import { useLanguage } from '../../context/contextLanguage';
 
