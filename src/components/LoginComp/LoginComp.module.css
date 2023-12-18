@@ -64,3 +64,15 @@ small,
 .loginBtn:focus {
   outline: none;
 }
+
+
+@media screen and (max-width: 520px) {
+  .loginForm {
+    text-align: center;
+    padding: 10px 4px 10px 4px;
+  }
+
+  .loginBtn {
+    margin: 30px;
+  }
+}

@@ -13,8 +13,11 @@ import { LoginContext, LoginContextType } from '../../context/loginContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import style from './LoginComp.module.css';
+import { useLanguage } from '../../context/contextLanguage';
 
 function LoginComp() {
+  const { lan } = useLanguage();
+
   const {
     register,
     handleSubmit,
@@ -52,7 +55,9 @@ function LoginComp() {
   return (
     <div className={style.subContainer}>
       <ToastContainer />
-      <h1 className={style.loginHeader}>Please Sign In</h1>
+      <h1 className={style.loginHeader}>
+        {lan === 'en' ? 'Please Sign In' : 'Пожалуйста войдите'}
+      </h1>
       <form onSubmit={handleSubmit(loginHandler)} className={style.loginForm}>
         <div className={style.emailLogin}>
           <input
@@ -63,7 +68,9 @@ function LoginComp() {
           />
           <p className={style.errorText}>
             {errors.email && (
-              <small className={style.textDanger}>{errors.email.message}</small>
+              <small className={style.textDanger}>
+                {lan === 'en' ? errors.email.message : 'Невалидное значение'}
+              </small>
             )}
           </p>
         </div>
@@ -78,14 +85,16 @@ function LoginComp() {
             {errors.password && (
               <p className={style.pre}>
                 <small className={style.textDanger}>
-                  {errors.password.message}
+                  {lan === 'en'
+                    ? errors.password.message
+                    : 'Невалидное значение'}
                 </small>
               </p>
             )}
           </div>
         </div>
         <button type="submit" className={`${style.loginBtn}`}>
-          Login
+          {lan === 'en' ? 'Login' : 'Войти'}
         </button>
       </form>
     </div>

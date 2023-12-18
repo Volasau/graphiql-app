@@ -12,9 +12,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginContext, LoginContextType } from '../../context/loginContext';
 import style from './RegisterComp.module.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { useLanguage } from '../../context/contextLanguage';
 
 const RegisterComp = () => {
   const loginValue = useContext<LoginContextType>(LoginContext);
+  const { lan } = useLanguage();
 
   const {
     handleSubmit,
@@ -54,7 +56,9 @@ const RegisterComp = () => {
   return (
     <div className={style.subContainer}>
       <ToastContainer />
-      <h1 className={style.registerHeader}>Create an account</h1>
+      <h1 className={style.registerHeader}>
+        {lan === 'en' ? 'Create an account' : 'Создайте аккаунт'}
+      </h1>
       <form
         data-testid="form__registr"
         onSubmit={handleSubmit(onhandleSubmit)}
@@ -72,7 +76,7 @@ const RegisterComp = () => {
             <p className={style.errorText}>
               {errors.name && (
                 <small className={style.textDanger}>
-                  {errors.name.message}
+                  {lan === 'en' ? errors.name.message : 'Невалидное значение'}
                 </small>
               )}
             </p>
@@ -87,7 +91,7 @@ const RegisterComp = () => {
             <p className={style.errorText}>
               {errors.email && (
                 <small className={style.textDanger}>
-                  {errors.email.message}
+                  {lan === 'en' ? errors.email.message : 'Невалидное значение'}
                 </small>
               )}
             </p>
@@ -103,7 +107,9 @@ const RegisterComp = () => {
               {errors.password && (
                 <p className={style.pre}>
                   <small className={style.textDanger}>
-                    {errors.password.message}
+                    {lan === 'en'
+                      ? errors.password.message
+                      : 'Невалидное значение'}
                   </small>
                 </p>
               )}
@@ -123,13 +129,15 @@ const RegisterComp = () => {
             <p className={style.errorText}>
               {errors.confirmPassword && (
                 <small className={style.textDanger}>
-                  {errors.confirmPassword.message}
+                  {lan === 'en'
+                    ? errors.confirmPassword?.message
+                    : 'Пароль не совпадает'}
                 </small>
               )}
             </p>
           </div>
           <button type="submit" className={`${style.regBtn}`}>
-            Sign-up
+            {lan === 'en' ? 'Sign-up' : 'Регистрация'}
           </button>
         </div>
       </form>
