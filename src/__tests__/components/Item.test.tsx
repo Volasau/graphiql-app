@@ -18,6 +18,7 @@ describe('Test Login page', () => {
                   kind: 'w',
                 },
               }}
+              endpoint={''}
             />
           </LanguageProvider>
         </MemoryRouter>

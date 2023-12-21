@@ -29,6 +29,7 @@ function Editor(props: EditorProps) {
   const [text, setText] = useState(value);
   const [variables, setVariables] = useState('');
   const [headers, setHeaders] = useState('');
+  const [countClick, setCountClick] = useState(0);
 
   const codeChange = (value: string) => {
     setText(value);
@@ -44,9 +45,13 @@ function Editor(props: EditorProps) {
   }, [readonly, value]);
 
   const setInitialQuery = (event: React.MouseEvent<HTMLElement>) => {
-    if (!event.target.innerText.trim().length) {
-      setText('query Example {}');
+    const target = event.target as HTMLElement;
+    if (countClick === 0) {
+      if (!target.innerText.trim().length) {
+        setText('query Example {}');
+      }
     }
+    setCountClick(1);
   };
 
   const variablesChange = (value: string) => {
@@ -78,8 +83,8 @@ function Editor(props: EditorProps) {
   };
 
   const runPrettify = () => {
-    if (value) {
-      setText(prettify(value));
+    if (text) {
+      setText(prettify(text));
     }
   };
 
