@@ -82,6 +82,14 @@ function Editor(props: EditorProps) {
     setShowParameters(!showParameters);
   };
 
+  const buttonTitle = showParameters
+    ? lan === 'en'
+      ? 'collapse'
+      : 'Свернуть'
+    : lan === 'en'
+      ? 'expand'
+      : 'Развернуть';
+
   const runPrettify = () => {
     if (text) {
       setText(prettify(text));
@@ -93,7 +101,7 @@ function Editor(props: EditorProps) {
       <div className="max-width">
         {!readonly ? (
           <div
-            title="Prettify"
+            title={lan === 'en' ? 'Prettify' : 'Форматировать'}
             onClick={runPrettify}
             className="prettify-button"
           >
@@ -118,23 +126,21 @@ function Editor(props: EditorProps) {
         {!readonly ? (
           <div className="flex-buttons">
             <div className="flex">
-              <div
-                className={
-                  variablesVisible ? 'active tab-header' : 'tab-header'
-                }
+              <button
                 onClick={variablesClickHandler}
+                className={variablesVisible ? 'active link btn' : 'link btn'}
               >
                 {lan === 'en' ? 'Variables' : 'Переменные'}
-              </div>
-              <div
-                className={headersVisible ? 'active tab-header' : 'tab-header'}
+              </button>
+              <button
                 onClick={headersClickHandler}
+                className={headersVisible ? 'active link btn' : 'link btn'}
               >
                 {lan === 'en' ? 'Headers' : 'Заголовки'}
-              </div>
+              </button>
             </div>
             <div
-              title={showParameters ? 'collapse' : 'expand'}
+              title={buttonTitle}
               className="arrow-button"
               onClick={parametersClickHandler}
             >

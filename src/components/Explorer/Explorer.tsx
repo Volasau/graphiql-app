@@ -16,9 +16,11 @@ function Explorer(props: ExplorerProps) {
         <div className="font-large documentation-header">
           {lan === 'en' ? 'Documentation' : 'Документация'}
         </div>
-        <div className="font-medium">Object Types</div>
+        <div className="font-medium">{lan === 'en' ? 'Types:' : 'Типы:'}</div>
         <div className="font-small grey-text">
-          Click on type name to expand/collapse available fields.
+          {lan === 'en'
+            ? 'Click on type name to expand/collapse available fields.'
+            : 'Кликните на название типа, чтобы раскрыть/свернуть доступные поля'}
         </div>
         <div className="types-block">
           {props.types?.length ? (
@@ -28,7 +30,9 @@ function Explorer(props: ExplorerProps) {
               endpoint={props.endpoint}
             ></SchemaType>
           ) : (
-            <h2 data-testid="empty-text">No items</h2>
+            <h2 data-testid="empty-text">
+              {lan === 'en' ? 'No items' : 'Нет записей'}
+            </h2>
           )}
         </div>
       </div>
