@@ -131,7 +131,11 @@ function EditorPanel() {
           <button className="button color-mediumlight" onClick={getSchema}>
             {lan === 'en' ? 'Get schema' : 'Получить схему'}
           </button>
-          <div title="Run request" className="run-button" onClick={runRequest}>
+          <div
+            title={lan === 'en' ? 'Run request' : 'Выполнить запрос'}
+            className="run-button"
+            onClick={runRequest}
+          >
             <img className="icon" src="src/assets/images/runIcon.png" />
           </div>
         </div>

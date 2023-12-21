@@ -36,7 +36,11 @@ function LoginComp() {
       if (currentUser) {
         userValue.setUser(currentUser);
         navigate('/graphiql');
-        toast.success('You login');
+        toast.success(
+          lan === 'en'
+            ? 'You have logged in successfully'
+            : 'Вы успешно зашли в систему'
+        );
       }
     });
     return () => unsubscribe();
@@ -48,7 +52,9 @@ function LoginComp() {
       loginValue.setLogin(true);
     } catch (error) {
       loginValue.setLogin(false);
-      toast.error(`${error}`);
+      toast.error(
+        lan === 'en' ? `${error}` : 'Попытка зайти в систему не удалась'
+      );
     }
   };
 

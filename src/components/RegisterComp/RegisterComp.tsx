@@ -45,11 +45,23 @@ const RegisterComp = () => {
       });
       loginValue.setLogin(true);
       navigate('/graphiql');
-      toast.success('User created successfully');
-      toast.success('You login');
+      toast.success(
+        lan === 'en'
+          ? 'User created successfully'
+          : 'Пользователь успешно создан'
+      );
+      toast.success(
+        lan === 'en'
+          ? 'You have logged in successfully'
+          : 'Вы успешно зашли в систему'
+      );
     } catch (error) {
       console.log(error);
-      toast.error('User creation failed');
+      toast.error(
+        lan === 'en'
+          ? 'User creation failed'
+          : 'Не удалось создать пользователя'
+      );
     }
   }
 

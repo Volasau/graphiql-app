@@ -97,7 +97,7 @@ function Layout() {
                 onClick={handleLogoutClick}
                 className={`${style.link} ${style.btn}`}
               >
-                Logout
+                {lan === 'en' ? 'Logout' : 'Выход'}
               </button>
             </>
           ) : (
