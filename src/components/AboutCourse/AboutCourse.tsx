@@ -1,6 +1,6 @@
 import { DataAboutCourse } from '../../utils/data/DataAbout';
 import style from './AboutCouse.module.css';
-import Rss from '../../../public/RSS.png';
+import Rss from '../../assets/logo/RSS.png';
 import { useLanguage } from '../../context/contextLanguage';
 
 function AboutCourse() {
