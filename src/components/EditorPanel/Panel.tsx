@@ -128,16 +128,12 @@ function EditorPanel() {
             }
             onChange={apiChangeHandler}
           />
-          <button className="button color-mediumlight" onClick={getSchema}>
+          <button onClick={getSchema} className="link btn">
+            {lan === 'en' ? 'Run request' : 'Выполнить запрос'}
+          </button>
+          <button onClick={runRequest} className="link btn">
             {lan === 'en' ? 'Get schema' : 'Получить схему'}
           </button>
-          <div
-            title={lan === 'en' ? 'Run request' : 'Выполнить запрос'}
-            className="run-button"
-            onClick={runRequest}
-          >
-            <img className="icon" src="src/assets/images/runIcon.png" />
-          </div>
         </div>
         <div className="color-light flex-wrap">
           <Editor
