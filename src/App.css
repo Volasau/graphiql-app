@@ -28,10 +28,6 @@ ul {
   font-size: 14px;
 }
 
-.color-dark {
-  background-color: rgb(22, 26, 48);
-}
-
 .color-mediumdark {
   background-color: rgb(49, 48, 77);
 }
@@ -64,5 +60,5 @@ ul {
 }
 
 .active {
-  background-color: rgb(226, 199, 154);
+  background-color: rgb(179, 148, 95);
 }

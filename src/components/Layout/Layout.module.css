@@ -26,6 +26,10 @@ button {
   transition: all 0.3s ease;
 }
 
+.link:hover {
+  color: rgb(49, 48, 77);
+}
+
 .scrolling {
   background-color: rgb(240, 236, 229);
 }
@@ -43,13 +47,6 @@ button {
   background-color: rgb(226, 199, 154);
 }
 
-.btn_lan {
-  color: black;
-  padding: 8px 16px;
-  border-radius: 4px;
-  background-color: rgb(224, 219, 191);
-}
-
 .active {
-  background-color: rgb(226, 199, 154);
+  background-color: rgb(179, 148, 95);
 }
