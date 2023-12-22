@@ -102,10 +102,10 @@ function Layout() {
             </>
           ) : (
             <>
-              <Link to="/login" className={style.link}>
+              <Link to="/login" className={`${style.link} ${style.btn}`}>
                 {lan === 'en' ? 'Login' : 'Логин'}
               </Link>
-              <Link to="/registration" className={style.link}>
+              <Link to="/registration" className={`${style.link} ${style.btn}`}>
                 {lan === 'en' ? 'Registration' : 'Регистрация'}
               </Link>
             </>
@@ -113,13 +113,13 @@ function Layout() {
           <div className={style.link}>
             <button
               onClick={handleLanClickEn}
-              className={`${lan === 'en' ? style.active : ''} ${style.btn_lan}`}
+              className={`${lan === 'en' ? style.active : ''} ${style.btn}`}
             >
               EN
             </button>
             <button
               onClick={handleLanClickRu}
-              className={`${lan === 'ru' ? style.active : ''} ${style.btn_lan}`}
+              className={`${lan === 'ru' ? style.active : ''} ${style.btn}`}
             >
               RU
             </button>

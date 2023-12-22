@@ -17,7 +17,7 @@ function Footer() {
               rel="noopener noreferrer"
             >
               <img src={LogoGitHub} className={style.logogit} />
-              <p>Poletaeva</p>
+              <p className={style.link_name}>Poletaeva</p>
             </a>
           </li>
           {/*ссылка на github azimkhan93*/}
@@ -29,7 +29,7 @@ function Footer() {
               rel="noopener noreferrer"
             >
               <img src={LogoGitHub} className={style.logogit} />
-              <span>Abdulsatarov</span>
+              <span className={style.link_name}>Abdulsatarov</span>
             </a>
           </li>
           {/*ссылка на github Volasau*/}
@@ -41,7 +41,7 @@ function Footer() {
               rel="noopener noreferrer"
             >
               <img src={LogoGitHub} className={style.logogit} />
-              <p>Volasau</p>
+              <p className={style.link_name}>Volasau</p>
             </a>
           </li>
         </ul>
