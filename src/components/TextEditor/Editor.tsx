@@ -100,13 +100,9 @@ function Editor(props: EditorProps) {
     <>
       <div className="max-width">
         {!readonly ? (
-          <div
-            title={lan === 'en' ? 'Prettify' : 'Форматировать'}
-            onClick={runPrettify}
-            className="prettify-button"
-          >
-            <img className="icon" src="src/assets/images/prettifyIcon.png" />
-          </div>
+          <button onClick={runPrettify} className="link btn">
+            {lan === 'en' ? 'Prettify' : 'Форматировать'}
+          </button>
         ) : (
           <></>
         )}
