@@ -46,7 +46,7 @@ function Editor(props: EditorProps) {
 
   const setInitialQuery = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLElement;
-    if (countClick === 0) {
+    if (countClick === 0 && !readonly) {
       if (!target.innerText.trim().length) {
         setText('query Example {}');
       }
@@ -100,25 +100,16 @@ function Editor(props: EditorProps) {
     <>
       <div className="max-width">
         {!readonly ? (
-          <div
-            title={lan === 'en' ? 'Prettify' : 'Форматировать'}
-            onClick={runPrettify}
-            className="prettify-button"
-          >
-            <img className="icon" src="src/assets/images/prettifyIcon.png" />
-          </div>
+          <button onClick={runPrettify} className="link btn">
+            {lan === 'en' ? 'Prettify' : 'Форматировать'}
+          </button>
         ) : (
           <></>
         )}
         <CodeMirror
-          className={
-            readonly
-              ? error
-                ? 'position-readonly width100 max-width CodeMirror'
-                : 'position-readonly width100 max-width'
-              : 'width100 max-width'
-          }
+          className={readonly && error ? 'CodeMirror' : ''}
           value={text}
+          readOnly={readonly}
           height="320px"
           onChange={codeChange}
           onMouseDown={setInitialQuery}

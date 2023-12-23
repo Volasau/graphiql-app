@@ -69,7 +69,11 @@ function EditorPanel() {
 
   const runRequest = () => {
     const variablesJson = variables ? JSON.parse(variables) : null;
-    const headersJson = headers ? JSON.parse(headers) : null;
+    const headersJson = headers
+      ? JSON.parse(headers)
+      : {
+          'Content-Type': 'application/json',
+        };
 
     fetch(endpoint, {
       method: 'POST',
@@ -117,8 +121,8 @@ function EditorPanel() {
 
   return (
     <>
-      <div className="width100">
-        <div className="flex api-block">
+      <div className="max-width">
+        <div className="flex api-block flex-wrap">
           <span className="margin-right-small">API: </span>
           <input
             className="margin-right-small input font-small"
@@ -128,16 +132,12 @@ function EditorPanel() {
             }
             onChange={apiChangeHandler}
           />
-          <button className="button color-mediumlight" onClick={getSchema}>
+          <button onClick={getSchema} className="link btn">
             {lan === 'en' ? 'Get schema' : 'Получить схему'}
           </button>
-          <div
-            title={lan === 'en' ? 'Run request' : 'Выполнить запрос'}
-            className="run-button"
-            onClick={runRequest}
-          >
-            <img className="icon" src="src/assets/images/runIcon.png" />
-          </div>
+          <button onClick={runRequest} className="link btn">
+            {lan === 'en' ? 'Run request' : 'Выполнить запрос'}
+          </button>
         </div>
         <div className="color-light flex-wrap">
           <Editor
@@ -146,7 +146,7 @@ function EditorPanel() {
             onVariablesChange={variablesChangeHandler}
             onHeadersChange={headersChangeHandler}
           ></Editor>
-          <div className={showExplorer ? 'width-half' : 'width-full'}>
+          <div className={showExplorer ? 'width-half topL' : 'width-full topL'}>
             <Editor value={result} readonly={true} error={errorResult}></Editor>
           </div>
           <div className="flex explorer-block">
