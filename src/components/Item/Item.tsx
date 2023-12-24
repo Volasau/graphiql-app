@@ -5,10 +5,9 @@ import SchemaType from '../SchemaType/Type';
 interface ItemProps {
   item: {
     name: string;
-    type: {
-      name: string;
-      kind: string;
-    };
+    type: string;
+    args: [];
+    fields: [];
   };
   endpoint: string;
 }
@@ -16,6 +15,7 @@ interface ItemProps {
 function Item(props: ItemProps) {
   const [typeVisible, setTypeVisible] = useState(false);
   const [fields, setFields] = useState([]);
+  const [infoVisible, setInfoVisible] = useState(false);
 
   // get fields from given type
   const getFields = (type: string) => {
@@ -51,24 +51,51 @@ function Item(props: ItemProps) {
   };
 
   const itemClickHandler = () => {
-    getFields(props.item.type.name);
+    getFields(props.item.type);
     setTypeVisible(!typeVisible);
   };
 
+  const nameClickHandler = () => {
+    setInfoVisible(!infoVisible);
+  };
+
   return (
-    <>
+    <div className="margin-bottom">
       <div className="flex item" data-testid="item">
-        <div className="font-small margin-small">{props.item.name}</div>
-        <div className="font-small type" onClick={itemClickHandler}>
-          [{props.item.type.name}]
+        <div className="font-medium margin-small" onClick={nameClickHandler}>
+          Object: {props.item.name}
+        </div>
+        <div className="font-medium type" onClick={itemClickHandler}>
+          Type: {props.item.type}
         </div>
       </div>
-      {typeVisible ? (
-        <SchemaType fields={fields} endpoint={props.endpoint}></SchemaType>
+      {infoVisible ? (
+        <div>
+          <div className="font-medium">Arguments:</div>
+          {props.item.args?.map((item, index) => (
+            <div className="flex">
+              <div className="font-small padding"> {item.name}: </div>
+              <div className="font-small padding"> {item.type}</div>
+            </div>
+          ))}
+          <div className="font-medium">Fields:</div>
+          {props.item.fields?.map((item, index) => (
+            <div className="flex">
+              <div className="font-small padding"> {item.name}: </div>
+              <div className="font-small padding"> {item.type}</div>
+            </div>
+          ))}
+        </div>
       ) : (
         <></>
       )}
-    </>
+
+      {/* {typeVisible ? (
+        <SchemaType fields={fields} endpoint={props.endpoint}></SchemaType>
+      ) : (
+        <></>
+      )} */}
+    </div>
   );
 }
 

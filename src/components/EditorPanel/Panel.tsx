@@ -3,6 +3,7 @@ import Editor from '../TextEditor/Editor';
 import Explorer from '../Explorer/Explorer';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
+import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
 
 export interface Field {
   name: string;
@@ -21,6 +22,20 @@ export interface SchemaData {
   };
 }
 
+const getType = (obj) => {
+  if (obj.kind === 'OBJECT') {
+    return obj.name;
+  }
+  return obj.ofType ? getType(obj.ofType) : '';
+};
+
+const getFieldType = (obj) => {
+  if (obj.name !== null) {
+    return obj.name;
+  }
+  return obj.ofType ? getFieldType(obj.ofType) : '';
+};
+
 function EditorPanel() {
   const { lan } = useLanguage();
   const [showExplorer, setShowExplorer] = useState(false);
@@ -35,36 +50,62 @@ function EditorPanel() {
 
   // get types
   const getSchema = () => {
-    const introspectionQuery = `
-      query {
-        __schema {
-          queryType {
-            fields {
-              name
-              description
-              type {
-                name
-                kind
-              }
-            }
-          }
-        }
-      }
-    `;
     fetch(endpoint, {
       method: 'POST',
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ query: introspectionQuery }),
+      body: JSON.stringify({
+        query: getIntrospectionQuery(),
+      }),
     })
-      .then((response) => {
-        response.json().then(({ data }) => {
-          const types = data.__schema.queryType.fields;
-          setTypes(types);
+      .then((res) => res.json())
+      .then((schemaJSON) => {
+        const introspectionData = schemaJSON.data.__schema;
+        const queryType = introspectionData.queryType.name;
+        let arrTypes = [];
+        let schemaTypes = [];
+        let allTypes = [];
+        introspectionData.types.map((item) => {
+          if (item.name === queryType) {
+            arrTypes = item.fields;
+          }
         });
+        introspectionData.types.map((item) => {
+          if (item.kind !== 'SCALAR') {
+            allTypes.push(item);
+          }
+        });
+
+        arrTypes.map((item) => {
+          schemaTypes.push({
+            name: item.name,
+            type: item.type.name || '[' + getType(item.type) + ']',
+            args: item.args.map((el) => {
+              return {
+                name: el.name,
+                type: getFieldType(el.type),
+              };
+            }),
+            fields: allTypes
+              .filter((el) => el.name === getType(item.type))
+              .at(0)
+              ?.fields.map((elem) => {
+                return {
+                  name: elem.name,
+                  type: getFieldType(elem.type),
+                };
+              }),
+          });
+        });
+        setTypes(schemaTypes);
+        return printSchema(buildClientSchema({ __schema: introspectionData }));
       })
-      .catch((error) => console.error(error));
+      .then((schema) => {
+        console.log('Client Schema:', schema);
+      })
+      .catch((error) => console.error('Error:', error));
   };
 
   const runRequest = () => {
