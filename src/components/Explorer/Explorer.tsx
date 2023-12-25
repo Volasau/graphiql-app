@@ -1,14 +1,11 @@
 import './Explorer.css';
 import { useLanguage } from '../../context/contextLanguage';
-import { SchemaData } from '../EditorPanel/Panel';
-import SchemaType from '../SchemaType/Type';
 
 interface ExplorerProps {
-  types: SchemaData[];
-  endpoint: string;
+  data: string;
 }
 
-function Explorer(props: ExplorerProps) {
+function Explorer({ data }: ExplorerProps) {
   const { lan } = useLanguage();
   return (
     <>
@@ -16,24 +13,11 @@ function Explorer(props: ExplorerProps) {
         <div className="font-large documentation-header">
           {lan === 'en' ? 'Documentation' : 'Документация'}
         </div>
-        <div className="font-medium">{lan === 'en' ? 'Types:' : 'Типы:'}</div>
-        <div className="font-small grey-text">
-          {lan === 'en'
-            ? 'Click on type name to expand/collapse available fields.'
-            : 'Кликните на название типа, чтобы раскрыть/свернуть доступные поля'}
+        <div className="font-medium">
+          {lan === 'en' ? 'Types and input:' : 'Типы и ввод:'}
         </div>
         <div className="types-block">
-          {props.types?.length ? (
-            // eslint-disable-next-line react/jsx-key
-            <SchemaType
-              fields={props.types}
-              endpoint={props.endpoint}
-            ></SchemaType>
-          ) : (
-            <h2 data-testid="empty-text">
-              {lan === 'en' ? 'No items' : 'Нет записей'}
-            </h2>
-          )}
+          <div className="container">{data && <pre>{data}</pre>}</div>
         </div>
       </div>
     </>
