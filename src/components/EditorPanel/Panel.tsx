@@ -3,6 +3,7 @@ import Editor from '../TextEditor/Editor';
 import Explorer from '../Explorer/Explorer';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
+import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
 
 export interface Field {
   name: string;
@@ -31,40 +32,36 @@ function EditorPanel() {
   const [result, setResult] = useState('');
   const [errorResult, setErrorResult] = useState(false);
   //const endpoint = 'https://rickandmortyapi.com/graphql';
-  const [types, setTypes] = useState([]);
 
   // get types
+  const [clientSchema, setClientSchema] = useState<string | null>(null);
+  const fetchSchema = async () => {
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: getIntrospectionQuery(),
+        }),
+      });
+
+      const schemaJSON = await response.json();
+      const introspectionData = schemaJSON.data.__schema;
+      const schema = printSchema(
+        buildClientSchema({ __schema: introspectionData })
+      );
+
+      setClientSchema(schema);
+    } catch (error) {
+      console.error('Error fetching schema:', error);
+    }
+  };
+
   const getSchema = () => {
-    const introspectionQuery = `
-      query {
-        __schema {
-          queryType {
-            fields {
-              name
-              description
-              type {
-                name
-                kind
-              }
-            }
-          }
-        }
-      }
-    `;
-    fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query: introspectionQuery }),
-    })
-      .then((response) => {
-        response.json().then(({ data }) => {
-          const types = data.__schema.queryType.fields;
-          setTypes(types);
-        });
-      })
-      .catch((error) => console.error(error));
+    fetchSchema();
   };
 
   const runRequest = () => {
@@ -164,8 +161,8 @@ function EditorPanel() {
                 }
               />
             </div>
-            {showExplorer ? (
-              <Explorer types={types} endpoint={endpoint}></Explorer>
+            {showExplorer && clientSchema ? (
+              <Explorer data={clientSchema} />
             ) : (
               <></>
             )}
