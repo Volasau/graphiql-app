@@ -1,9 +1,11 @@
 import './Panel.css';
 import Editor from '../TextEditor/Editor';
-import Explorer from '../Explorer/Explorer';
+// import Explorer from '../Explorer/Explorer';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
+import { Suspense, lazy } from 'react';
+const Explorer = lazy(() => import('../Explorer/Explorer'));
 
 export interface Field {
   name: string;
@@ -61,7 +63,10 @@ function EditorPanel() {
   };
 
   const getSchema = () => {
-    fetchSchema();
+    if (endpoint.trim() !== '') {
+      fetchSchema();
+      setShowExplorer(true);
+    }
   };
 
   const runRequest = () => {
@@ -113,7 +118,9 @@ function EditorPanel() {
   };
 
   const explorerClickHandler = () => {
-    setShowExplorer(!showExplorer);
+    if (clientSchema) {
+      setShowExplorer(!showExplorer);
+    }
   };
 
   return (
@@ -161,11 +168,13 @@ function EditorPanel() {
                 }
               />
             </div>
-            {showExplorer && clientSchema ? (
-              <Explorer data={clientSchema} />
-            ) : (
-              <></>
-            )}
+            <Suspense fallback={<p>Loading schema...</p>}>
+              {showExplorer && clientSchema ? (
+                <Explorer data={clientSchema} />
+              ) : (
+                <></>
+              )}
+            </Suspense>
           </div>
         </div>
       </div>
