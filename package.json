@@ -25,6 +25,7 @@
     "@uiw/react-codemirror": "^4.21.21",
     "antd": "^5.12.2",
     "firebase": "^10.7.1",
+    "graphql": "^16.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
