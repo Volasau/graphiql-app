@@ -18,8 +18,8 @@ function DocumentationSchema(props: DocumentationSchemaProps) {
         <div className="font-medium">{lan === 'en' ? 'Types:' : 'Типы:'}</div>
         <div className="font-small grey-text">
           {lan === 'en'
-            ? 'Click on type name to expand/collapse available fields.'
-            : 'Кликните на название типа, чтобы раскрыть/свернуть доступные поля'}
+            ? 'Click on object name to expand/collapse available fields.'
+            : 'Кликните на название объекта, чтобы раскрыть/свернуть доступные поля'}
         </div>
         <div>
           {props.types?.length ? (
