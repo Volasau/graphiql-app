@@ -1,70 +1,53 @@
 import { useState } from 'react';
 import './Item.css';
 import SchemaType from '../SchemaType/Type';
+import { SchemaObject } from '../EditorPanel/Panel';
 
 interface ItemProps {
-  item: {
-    name: string;
-    type: {
-      name: string;
-      kind: string;
-    };
-  };
-  endpoint: string;
+  item: SchemaObject;
+  types: SchemaObject[];
+  allObjects: SchemaObject[];
 }
 
 function Item(props: ItemProps) {
   const [typeVisible, setTypeVisible] = useState(false);
-  const [fields, setFields] = useState([]);
+  const [types, setTypes] = useState([]);
+  const typeClass = `font-small padding ${
+    props.allObjects.find((item: SchemaObject) => item.type === props.item.type)
+      ? 'type'
+      : ''
+  }`;
 
-  // get fields from given type
-  const getFields = (type: string) => {
-    const introspectionQuery = `
-      query {
-        __type(name: "${type}") {
-          name
-          fields {
-            name
-            type {
-              name
-              kind
-            }
-          }
-        }
-      }
-    `;
-
-    fetch(props.endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query: introspectionQuery }),
-    })
-      .then((response) => {
-        response.json().then(({ data }) => {
-          const t = data.__type ? data.__type.fields : [];
-          setFields(t);
-        });
-      })
-      .catch((error) => console.error(error));
-  };
-
-  const itemClickHandler = () => {
-    getFields(props.item.type.name);
-    setTypeVisible(!typeVisible);
+  const itemClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement;
+    const typeName = target.innerText;
+    const type: SchemaObject | undefined = props.allObjects.find(
+      (item: SchemaObject) => item.type === typeName
+    );
+    if (type) {
+      setTypes([type]);
+      setTypeVisible(!typeVisible);
+    }
   };
 
   return (
     <>
-      <div className="flex item" data-testid="item">
-        <div className="font-small margin-small">{props.item.name}</div>
-        <div className="font-small type" onClick={itemClickHandler}>
-          [{props.item.type.name}]
+      <div className="flex">
+        <div className="font-small padding"> {props.item.name}: </div>
+        <div className={typeClass} onClick={itemClickHandler}>
+          {' '}
+          {props.item.type}
         </div>
       </div>
+
       {typeVisible ? (
-        <SchemaType fields={fields} endpoint={props.endpoint}></SchemaType>
+        <div className="nested-type-block">
+          <SchemaType
+            types={types}
+            allObjects={props.allObjects}
+            infoVisible={true}
+          />
+        </div>
       ) : (
         <></>
       )}

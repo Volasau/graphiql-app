@@ -5,24 +5,54 @@ import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
 import { Suspense, lazy } from 'react';
-const Explorer = lazy(() => import('../Explorer/Explorer'));
+const DocumentationSchema = lazy(
+  () => import('../DocumentationSchema/DocumentationSchema')
+);
 
-export interface Field {
+export interface SchemaObject {
   name: string;
-  type: {
-    name: string;
-    kind: string;
-  };
+  type: string;
+  args: [];
+  fields: [];
 }
 
-export interface SchemaData {
+export interface SchemaFieldData {
+  args: [];
   name: string;
   description: string;
+  isDeprecated: boolean;
+  deprecationReason: string;
   type: {
     name: string;
     kind: string;
+    ofType: object;
   };
 }
+
+export interface SchemaTypeData {
+  description: string;
+  enumValues: [];
+  fields: [];
+  inputFields: [];
+  interfaces: [];
+  kind: string;
+  name: string;
+  possibleTypes: [];
+}
+
+const getType = (obj): string => {
+  if (obj.kind === 'OBJECT') {
+    return obj.name;
+  }
+  return obj.ofType ? getType(obj.ofType) : '';
+};
+
+const getFieldType = (obj): string => {
+  if (obj.name !== null) {
+    return obj.name;
+  }
+  return obj.ofType ? getFieldType(obj.ofType) : '';
+};
 
 function EditorPanel() {
   const { lan } = useLanguage();
@@ -34,9 +64,10 @@ function EditorPanel() {
   const [result, setResult] = useState('');
   const [errorResult, setErrorResult] = useState(false);
   //const endpoint = 'https://rickandmortyapi.com/graphql';
+  const [objects, setObjects] = useState<SchemaObject[]>([]);
 
   // get types
-  const [clientSchema, setClientSchema] = useState<string | null>(null);
+  //const [clientSchema, setClientSchema] = useState<string | null>(null);
   const fetchSchema = async () => {
     try {
       const response = await fetch(endpoint, {
@@ -52,11 +83,43 @@ function EditorPanel() {
 
       const schemaJSON = await response.json();
       const introspectionData = schemaJSON.data.__schema;
-      const schema = printSchema(
-        buildClientSchema({ __schema: introspectionData })
-      );
+      const queryType = introspectionData.queryType.name;
+      let arrTypes: SchemaFieldData[] = [];
+      const schemaTypes: SchemaObject[] = [];
+      const allTypes: SchemaTypeData[] = [];
+      introspectionData.types.map((item: SchemaTypeData) => {
+        if (item.name === queryType) {
+          arrTypes = item.fields;
+        }
+      });
+      introspectionData.types.map((item: SchemaTypeData) => {
+        if (item.kind !== 'SCALAR') {
+          allTypes.push(item);
+        }
+      });
 
-      setClientSchema(schema);
+      arrTypes.map((item) => {
+        schemaTypes.push({
+          name: item.name,
+          type: item.type.name || '[' + getType(item.type) + ']',
+          args: item.args.map((el) => {
+            return {
+              name: el.name,
+              type: getFieldType(el.type),
+            };
+          }),
+          fields: allTypes
+            .filter((el) => el.name === getType(item.type))
+            .at(0)
+            ?.fields.map((elem) => {
+              return {
+                name: elem.name,
+                type: getFieldType(elem.type),
+              };
+            }),
+        });
+      });
+      setObjects(schemaTypes);
     } catch (error) {
       console.error('Error fetching schema:', error);
     }
@@ -118,7 +181,7 @@ function EditorPanel() {
   };
 
   const explorerClickHandler = () => {
-    if (clientSchema) {
+    if (objects.length) {
       setShowExplorer(!showExplorer);
     }
   };
@@ -136,7 +199,7 @@ function EditorPanel() {
             }
             onChange={apiChangeHandler}
           />
-          <button onClick={getSchema} className="link btn">
+          <button onClick={getSchema} className="link btn" disabled={!endpoint.trim().length}>
             {lan === 'en' ? 'Get schema' : 'Получить схему'}
           </button>
           <button onClick={runRequest} className="link btn">
@@ -154,23 +217,22 @@ function EditorPanel() {
             <Editor value={result} readonly={true} error={errorResult}></Editor>
           </div>
           <div className="flex explorer-block">
-            <div
-              title={showExplorer ? 'collapse' : 'expand'}
-              className="arrow-button"
+            <button
               onClick={explorerClickHandler}
+              className="link btn height30"
+              disabled={!objects.length}
             >
-              <img
-                className="icon"
-                src={
-                  showExplorer
-                    ? 'src/assets/images/collapseIcon.png'
-                    : 'src/assets/images/expandIcon.png'
-                }
-              />
-            </div>
+              {lan === 'en'
+                ? showExplorer
+                  ? 'collapse'
+                  : 'expand'
+                : showExplorer
+                  ? 'свернуть'
+                  : 'развернуть'}
+            </button>
             <Suspense fallback={<p>Loading schema...</p>}>
-              {showExplorer && clientSchema ? (
-                <Explorer data={clientSchema} />
+              {showExplorer && objects.length ? (
+                <DocumentationSchema types={objects} />
               ) : (
                 <></>
               )}
