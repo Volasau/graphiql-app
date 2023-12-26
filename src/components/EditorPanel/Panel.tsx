@@ -5,7 +5,9 @@ import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
 import { Suspense, lazy } from 'react';
-const DocumentationSchema = lazy(() => import('../DocumentationSchema/DocumentationSchema'));
+const DocumentationSchema = lazy(
+  () => import('../DocumentationSchema/DocumentationSchema')
+);
 
 export interface SchemaObject {
   name: string;
@@ -65,7 +67,7 @@ function EditorPanel() {
   const [objects, setObjects] = useState<SchemaObject[]>([]);
 
   // get types
-  const [clientSchema, setClientSchema] = useState<string | null>(null);
+  //const [clientSchema, setClientSchema] = useState<string | null>(null);
   const fetchSchema = async () => {
     try {
       const response = await fetch(endpoint, {
@@ -179,7 +181,7 @@ function EditorPanel() {
   };
 
   const explorerClickHandler = () => {
-    if (clientSchema) {
+    if (objects.length) {
       setShowExplorer(!showExplorer);
     }
   };
@@ -197,7 +199,7 @@ function EditorPanel() {
             }
             onChange={apiChangeHandler}
           />
-          <button onClick={getSchema} className="link btn">
+          <button onClick={getSchema} className="link btn" disabled={!endpoint.trim().length}>
             {lan === 'en' ? 'Get schema' : 'Получить схему'}
           </button>
           <button onClick={runRequest} className="link btn">
@@ -215,22 +217,21 @@ function EditorPanel() {
             <Editor value={result} readonly={true} error={errorResult}></Editor>
           </div>
           <div className="flex explorer-block">
-            <div
-              title={showExplorer ? 'collapse' : 'expand'}
-              className="arrow-button"
+            <button
               onClick={explorerClickHandler}
+              className="link btn height30"
+              disabled={!objects.length}
             >
-              <img
-                className="icon"
-                src={
-                  showExplorer
-                    ? 'src/assets/images/collapseIcon.png'
-                    : 'src/assets/images/expandIcon.png'
-                }
-              />
-            </div>
+              {lan === 'en'
+                ? showExplorer
+                  ? 'collapse'
+                  : 'expand'
+                : showExplorer
+                  ? 'свернуть'
+                  : 'развернуть'}
+            </button>
             <Suspense fallback={<p>Loading schema...</p>}>
-              {showExplorer && objects ? (
+              {showExplorer && objects.length ? (
                 <DocumentationSchema types={objects} />
               ) : (
                 <></>
