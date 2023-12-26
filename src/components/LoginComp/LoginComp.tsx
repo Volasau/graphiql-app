@@ -44,7 +44,7 @@ function LoginComp() {
       }
     });
     return () => unsubscribe();
-  }, [userValue, navigate]);
+  }, [userValue, navigate, lan]);
 
   const loginHandler = async (data: { email: string; password: string }) => {
     try {
