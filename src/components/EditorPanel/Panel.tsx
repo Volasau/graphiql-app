@@ -1,9 +1,11 @@
 import './Panel.css';
 import Editor from '../TextEditor/Editor';
+// import Explorer from '../Explorer/Explorer';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
-import DocumentationSchema from '../DocumentationSchema/DocumentationSchema';
+import { Suspense, lazy } from 'react';
+const DocumentationSchema = lazy(() => import('../DocumentationSchema/DocumentationSchema'));
 
 export interface SchemaObject {
   name: string;
@@ -63,60 +65,69 @@ function EditorPanel() {
   const [objects, setObjects] = useState<SchemaObject[]>([]);
 
   // get types
-  const getSchema = () => {
-    fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: getIntrospectionQuery(),
-      }),
-    })
-      .then((res) => res.json())
-      .then((schemaJSON) => {
-        const introspectionData = schemaJSON.data.__schema;
-        const queryType = introspectionData.queryType.name;
-        let arrTypes: SchemaFieldData[] = [];
-        const schemaTypes: SchemaObject[] = [];
-        const allTypes: SchemaTypeData[] = [];
-        introspectionData.types.map((item: SchemaTypeData) => {
-          if (item.name === queryType) {
-            arrTypes = item.fields;
-          }
-        });
-        introspectionData.types.map((item: SchemaTypeData) => {
-          if (item.kind !== 'SCALAR') {
-            allTypes.push(item);
-          }
-        });
+  const [clientSchema, setClientSchema] = useState<string | null>(null);
+  const fetchSchema = async () => {
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: getIntrospectionQuery(),
+        }),
+      });
 
-        arrTypes.map((item) => {
-          schemaTypes.push({
-            name: item.name,
-            type: item.type.name || '[' + getType(item.type) + ']',
-            args: item.args.map((el) => {
+      const schemaJSON = await response.json();
+      const introspectionData = schemaJSON.data.__schema;
+      const queryType = introspectionData.queryType.name;
+      let arrTypes: SchemaFieldData[] = [];
+      const schemaTypes: SchemaObject[] = [];
+      const allTypes: SchemaTypeData[] = [];
+      introspectionData.types.map((item: SchemaTypeData) => {
+        if (item.name === queryType) {
+          arrTypes = item.fields;
+        }
+      });
+      introspectionData.types.map((item: SchemaTypeData) => {
+        if (item.kind !== 'SCALAR') {
+          allTypes.push(item);
+        }
+      });
+
+      arrTypes.map((item) => {
+        schemaTypes.push({
+          name: item.name,
+          type: item.type.name || '[' + getType(item.type) + ']',
+          args: item.args.map((el) => {
+            return {
+              name: el.name,
+              type: getFieldType(el.type),
+            };
+          }),
+          fields: allTypes
+            .filter((el) => el.name === getType(item.type))
+            .at(0)
+            ?.fields.map((elem) => {
               return {
-                name: el.name,
-                type: getFieldType(el.type),
+                name: elem.name,
+                type: getFieldType(elem.type),
               };
             }),
-            fields: allTypes
-              .filter((el) => el.name === getType(item.type))
-              .at(0)
-              ?.fields.map((elem) => {
-                return {
-                  name: elem.name,
-                  type: getFieldType(elem.type),
-                };
-              }),
-          });
         });
-        setObjects(schemaTypes);
-        return printSchema(buildClientSchema({ __schema: introspectionData }));
-      })
-      .catch((error) => console.error('Error:', error));
+      });
+      setObjects(schemaTypes);
+    } catch (error) {
+      console.error('Error fetching schema:', error);
+    }
+  };
+
+  const getSchema = () => {
+    if (endpoint.trim() !== '') {
+      fetchSchema();
+      setShowExplorer(true);
+    }
   };
 
   const runRequest = () => {
@@ -168,7 +179,9 @@ function EditorPanel() {
   };
 
   const explorerClickHandler = () => {
-    setShowExplorer(!showExplorer);
+    if (clientSchema) {
+      setShowExplorer(!showExplorer);
+    }
   };
 
   return (
@@ -216,7 +229,13 @@ function EditorPanel() {
                 }
               />
             </div>
-            {showExplorer ? <DocumentationSchema types={objects} /> : <></>}
+            <Suspense fallback={<p>Loading schema...</p>}>
+              {showExplorer && objects ? (
+                <DocumentationSchema types={objects} />
+              ) : (
+                <></>
+              )}
+            </Suspense>
           </div>
         </div>
       </div>
