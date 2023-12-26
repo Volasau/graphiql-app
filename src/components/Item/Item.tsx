@@ -1,101 +1,57 @@
 import { useState } from 'react';
 import './Item.css';
 import SchemaType from '../SchemaType/Type';
+import { SchemaObject } from '../EditorPanel/Panel';
 
 interface ItemProps {
-  item: {
-    name: string;
-    type: string;
-    args: [];
-    fields: [];
-  };
-  endpoint: string;
+  item: SchemaObject;
+  types: SchemaObject[];
+  allObjects: SchemaObject[];
 }
 
 function Item(props: ItemProps) {
   const [typeVisible, setTypeVisible] = useState(false);
-  const [fields, setFields] = useState([]);
-  const [infoVisible, setInfoVisible] = useState(false);
+  const [types, setTypes] = useState([]);
+  const typeClass = `font-small padding ${
+    props.allObjects.find((item: SchemaObject) => item.type === props.item.type)
+      ? 'type'
+      : ''
+  }`;
 
-  // get fields from given type
-  const getFields = (type: string) => {
-    const introspectionQuery = `
-      query {
-        __type(name: "${type}") {
-          name
-          fields {
-            name
-            type {
-              name
-              kind
-            }
-          }
-        }
-      }
-    `;
-
-    fetch(props.endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query: introspectionQuery }),
-    })
-      .then((response) => {
-        response.json().then(({ data }) => {
-          const t = data.__type ? data.__type.fields : [];
-          setFields(t);
-        });
-      })
-      .catch((error) => console.error(error));
-  };
-
-  const itemClickHandler = () => {
-    getFields(props.item.type);
-    setTypeVisible(!typeVisible);
-  };
-
-  const nameClickHandler = () => {
-    setInfoVisible(!infoVisible);
+  const itemClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement;
+    const typeName = target.innerText;
+    const type: SchemaObject | undefined = props.allObjects.find(
+      (item: SchemaObject) => item.type === typeName
+    );
+    if (type) {
+      setTypes([type]);
+      setTypeVisible(!typeVisible);
+    }
   };
 
   return (
-    <div className="margin-bottom">
-      <div className="flex item" data-testid="item">
-        <div className="font-medium margin-small" onClick={nameClickHandler}>
-          Object: {props.item.name}
-        </div>
-        <div className="font-medium type" onClick={itemClickHandler}>
-          Type: {props.item.type}
+    <>
+      <div className="flex">
+        <div className="font-small padding"> {props.item.name}: </div>
+        <div className={typeClass} onClick={itemClickHandler}>
+          {' '}
+          {props.item.type}
         </div>
       </div>
-      {infoVisible ? (
-        <div>
-          <div className="font-medium">Arguments:</div>
-          {props.item.args?.map((item, index) => (
-            <div className="flex">
-              <div className="font-small padding"> {item.name}: </div>
-              <div className="font-small padding"> {item.type}</div>
-            </div>
-          ))}
-          <div className="font-medium">Fields:</div>
-          {props.item.fields?.map((item, index) => (
-            <div className="flex">
-              <div className="font-small padding"> {item.name}: </div>
-              <div className="font-small padding"> {item.type}</div>
-            </div>
-          ))}
+
+      {typeVisible ? (
+        <div className="nested-type-block">
+          <SchemaType
+            types={types}
+            allObjects={props.allObjects}
+            infoVisible={true}
+          />
         </div>
       ) : (
         <></>
       )}
-
-      {/* {typeVisible ? (
-        <SchemaType fields={fields} endpoint={props.endpoint}></SchemaType>
-      ) : (
-        <></>
-      )} */}
-    </div>
+    </>
   );
 }
 

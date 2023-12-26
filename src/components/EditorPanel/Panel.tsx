@@ -1,35 +1,49 @@
 import './Panel.css';
 import Editor from '../TextEditor/Editor';
-import Explorer from '../Explorer/Explorer';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
+import DocumentationSchema from '../DocumentationSchema/DocumentationSchema';
 
-export interface Field {
+export interface SchemaObject {
   name: string;
-  type: {
-    name: string;
-    kind: string;
-  };
+  type: string;
+  args: [];
+  fields: [];
 }
 
-export interface SchemaData {
+export interface SchemaFieldData {
+  args: [];
   name: string;
   description: string;
+  isDeprecated: boolean;
+  deprecationReason: string;
   type: {
     name: string;
     kind: string;
+    ofType: object;
   };
 }
 
-const getType = (obj) => {
+export interface SchemaTypeData {
+  description: string;
+  enumValues: [];
+  fields: [];
+  inputFields: [];
+  interfaces: [];
+  kind: string;
+  name: string;
+  possibleTypes: [];
+}
+
+const getType = (obj): string => {
   if (obj.kind === 'OBJECT') {
     return obj.name;
   }
   return obj.ofType ? getType(obj.ofType) : '';
 };
 
-const getFieldType = (obj) => {
+const getFieldType = (obj): string => {
   if (obj.name !== null) {
     return obj.name;
   }
@@ -46,7 +60,7 @@ function EditorPanel() {
   const [result, setResult] = useState('');
   const [errorResult, setErrorResult] = useState(false);
   //const endpoint = 'https://rickandmortyapi.com/graphql';
-  const [types, setTypes] = useState([]);
+  const [objects, setObjects] = useState<SchemaObject[]>([]);
 
   // get types
   const getSchema = () => {
@@ -64,15 +78,15 @@ function EditorPanel() {
       .then((schemaJSON) => {
         const introspectionData = schemaJSON.data.__schema;
         const queryType = introspectionData.queryType.name;
-        let arrTypes = [];
-        let schemaTypes = [];
-        let allTypes = [];
-        introspectionData.types.map((item) => {
+        let arrTypes: SchemaFieldData[] = [];
+        const schemaTypes: SchemaObject[] = [];
+        const allTypes: SchemaTypeData[] = [];
+        introspectionData.types.map((item: SchemaTypeData) => {
           if (item.name === queryType) {
             arrTypes = item.fields;
           }
         });
-        introspectionData.types.map((item) => {
+        introspectionData.types.map((item: SchemaTypeData) => {
           if (item.kind !== 'SCALAR') {
             allTypes.push(item);
           }
@@ -99,11 +113,8 @@ function EditorPanel() {
               }),
           });
         });
-        setTypes(schemaTypes);
+        setObjects(schemaTypes);
         return printSchema(buildClientSchema({ __schema: introspectionData }));
-      })
-      .then((schema) => {
-        console.log('Client Schema:', schema);
       })
       .catch((error) => console.error('Error:', error));
   };
@@ -205,11 +216,7 @@ function EditorPanel() {
                 }
               />
             </div>
-            {showExplorer ? (
-              <Explorer types={types} endpoint={endpoint}></Explorer>
-            ) : (
-              <></>
-            )}
+            {showExplorer ? <DocumentationSchema types={objects} /> : <></>}
           </div>
         </div>
       </div>

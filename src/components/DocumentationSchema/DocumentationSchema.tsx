@@ -1,14 +1,13 @@
-import './Explorer.css';
+import './DocumentationSchema.css';
 import { useLanguage } from '../../context/contextLanguage';
-import { SchemaData } from '../EditorPanel/Panel';
+import { SchemaObject } from '../EditorPanel/Panel';
 import SchemaType from '../SchemaType/Type';
 
-interface ExplorerProps {
-  types: SchemaData[];
-  endpoint: string;
+interface DocumentationSchemaProps {
+  types: SchemaObject[];
 }
 
-function Explorer(props: ExplorerProps) {
+function DocumentationSchema(props: DocumentationSchemaProps) {
   const { lan } = useLanguage();
   return (
     <>
@@ -22,12 +21,13 @@ function Explorer(props: ExplorerProps) {
             ? 'Click on type name to expand/collapse available fields.'
             : 'Кликните на название типа, чтобы раскрыть/свернуть доступные поля'}
         </div>
-        <div className="types-block">
+        <div>
           {props.types?.length ? (
             // eslint-disable-next-line react/jsx-key
             <SchemaType
-              fields={props.types}
-              endpoint={props.endpoint}
+              types={props.types}
+              allObjects={props.types}
+              infoVisible={false}
             ></SchemaType>
           ) : (
             <h2 data-testid="empty-text">
@@ -40,4 +40,4 @@ function Explorer(props: ExplorerProps) {
   );
 }
 
-export default Explorer;
+export default DocumentationSchema;
