@@ -3,17 +3,28 @@ import Editor from '../TextEditor/Editor';
 // import Explorer from '../Explorer/Explorer';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
-import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
+import { getIntrospectionQuery } from 'graphql';
 import { Suspense, lazy } from 'react';
 const DocumentationSchema = lazy(
   () => import('../DocumentationSchema/DocumentationSchema')
 );
 
+export interface SchemaObjectField {
+  name: string;
+  type: string;
+}
+
 export interface SchemaObject {
   name: string;
   type: string;
-  args: [];
-  fields: [];
+  args: SchemaObjectField[];
+  fields: SchemaObjectField[] | undefined;
+}
+
+export interface TypeObject {
+  name: string;
+  kind: string;
+  ofType: TypeObject;
 }
 
 export interface SchemaFieldData {
@@ -22,32 +33,35 @@ export interface SchemaFieldData {
   description: string;
   isDeprecated: boolean;
   deprecationReason: string;
-  type: {
-    name: string;
-    kind: string;
-    ofType: object;
-  };
+  type: TypeObject;
+}
+
+export interface InputFieldData {
+  name: string;
+  description: string;
+  defaultValue: unknown; //???
+  type: TypeObject;
 }
 
 export interface SchemaTypeData {
   description: string;
   enumValues: [];
   fields: [];
-  inputFields: [];
+  inputFields: InputFieldData[];
   interfaces: [];
   kind: string;
   name: string;
   possibleTypes: [];
 }
 
-const getType = (obj): string => {
+const getType = (obj: TypeObject): string => {
   if (obj.kind === 'OBJECT') {
     return obj.name;
   }
   return obj.ofType ? getType(obj.ofType) : '';
 };
 
-const getFieldType = (obj): string => {
+const getFieldType = (obj: TypeObject): string => {
   if (obj.name !== null) {
     return obj.name;
   }
@@ -98,11 +112,11 @@ function EditorPanel() {
         }
       });
 
-      arrTypes.map((item) => {
+      arrTypes.map((item: SchemaFieldData) => {
         schemaTypes.push({
           name: item.name,
           type: item.type.name || '[' + getType(item.type) + ']',
-          args: item.args.map((el) => {
+          args: item.args.map((el: InputFieldData) => {
             return {
               name: el.name,
               type: getFieldType(el.type),
@@ -111,7 +125,7 @@ function EditorPanel() {
           fields: allTypes
             .filter((el) => el.name === getType(item.type))
             .at(0)
-            ?.fields.map((elem) => {
+            ?.fields.map((elem: SchemaFieldData) => {
               return {
                 name: elem.name,
                 type: getFieldType(elem.type),
@@ -119,6 +133,24 @@ function EditorPanel() {
             }),
         });
       });
+
+      // add input objects
+      allTypes.map((item: SchemaTypeData) => {
+        if (item.kind === 'INPUT_OBJECT') {
+          schemaTypes.push({
+            name: item.name,
+            type: item.name,
+            args: [],
+            fields: item.inputFields.map((elem: InputFieldData) => {
+              return {
+                name: elem.name,
+                type: getFieldType(elem.type),
+              };
+            }),
+          });
+        }
+      });
+
       setObjects(schemaTypes);
     } catch (error) {
       console.error('Error fetching schema:', error);
@@ -199,7 +231,11 @@ function EditorPanel() {
             }
             onChange={apiChangeHandler}
           />
-          <button onClick={getSchema} className="link btn" disabled={!endpoint.trim().length}>
+          <button
+            onClick={getSchema}
+            className="link btn"
+            disabled={!endpoint.trim().length}
+          >
             {lan === 'en' ? 'Get schema' : 'Получить схему'}
           </button>
           <button onClick={runRequest} className="link btn">
@@ -232,7 +268,7 @@ function EditorPanel() {
             </button>
             <Suspense fallback={<p>Loading schema...</p>}>
               {showExplorer && objects.length ? (
-                <DocumentationSchema types={objects} />
+                <DocumentationSchema objects={objects} />
               ) : (
                 <></>
               )}
