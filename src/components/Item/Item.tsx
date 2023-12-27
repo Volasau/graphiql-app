@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import './Item.css';
 import SchemaType from '../SchemaType/Type';
-import { SchemaObject } from '../EditorPanel/Panel';
+import { SchemaObject, SchemaObjectField } from '../EditorPanel/Panel';
 
 interface ItemProps {
-  item: SchemaObject;
-  types: SchemaObject[];
+  item: SchemaObjectField;
   allObjects: SchemaObject[];
 }
 
 function Item(props: ItemProps) {
   const [typeVisible, setTypeVisible] = useState(false);
-  const [types, setTypes] = useState([]);
+  const [type, setType] = useState<SchemaObject | undefined>();
   const typeClass = `font-small padding ${
     props.allObjects.find((item: SchemaObject) => item.type === props.item.type)
       ? 'type'
@@ -25,7 +24,7 @@ function Item(props: ItemProps) {
       (item: SchemaObject) => item.type === typeName
     );
     if (type) {
-      setTypes([type]);
+      setType(type);
       setTypeVisible(!typeVisible);
     }
   };
@@ -43,7 +42,7 @@ function Item(props: ItemProps) {
       {typeVisible ? (
         <div className="nested-type-block">
           <SchemaType
-            types={types}
+            type={type}
             allObjects={props.allObjects}
             infoVisible={true}
           />

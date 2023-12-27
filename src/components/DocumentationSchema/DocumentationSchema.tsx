@@ -4,7 +4,7 @@ import { SchemaObject } from '../EditorPanel/Panel';
 import SchemaType from '../SchemaType/Type';
 
 interface DocumentationSchemaProps {
-  types: SchemaObject[];
+  objects: SchemaObject[];
 }
 
 function DocumentationSchema(props: DocumentationSchemaProps) {
@@ -22,13 +22,19 @@ function DocumentationSchema(props: DocumentationSchemaProps) {
             : 'Кликните на название объекта, чтобы раскрыть/свернуть доступные поля'}
         </div>
         <div>
-          {props.types?.length ? (
+          {props.objects?.length ? (
             // eslint-disable-next-line react/jsx-key
-            <SchemaType
-              types={props.types}
-              allObjects={props.types}
-              infoVisible={false}
-            ></SchemaType>
+            <div>
+              {props.objects.map((item, index) => (
+                <div className="margin-bottom" key={index}>
+                  <SchemaType
+                    type={item}
+                    allObjects={props.objects}
+                    infoVisible={false}
+                  />
+                </div>
+              ))}
+            </div>
           ) : (
             <h2 data-testid="empty-text">
               {lan === 'en' ? 'No items' : 'Нет записей'}
