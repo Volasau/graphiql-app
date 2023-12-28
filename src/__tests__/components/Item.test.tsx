@@ -4,8 +4,8 @@ import { LanguageProvider } from '../../context/contextLanguage';
 import { MemoryRouter } from 'react-router-dom';
 import Item from '../../components/Item/Item';
 
-describe('Test Login page', () => {
-  test('Сhecked login page', () => {
+describe('Test Item page', () => {
+  test('Сhecked Item page', () => {
     act(() => {
       render(
         <MemoryRouter>
@@ -13,12 +13,9 @@ describe('Test Login page', () => {
             <Item
               item={{
                 name: 'w',
-                type: {
-                  name: 'w',
-                  kind: 'w',
-                },
+                type: 'w',
               }}
-              endpoint={''}
+              allObjects={[]}
             />
           </LanguageProvider>
         </MemoryRouter>
