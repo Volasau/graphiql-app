@@ -220,7 +220,7 @@ function EditorPanel() {
 
   return (
     <>
-      <div className="max-width">
+      <div data-testid="panel" className="max-width">
         <div className="flex api-block flex-wrap">
           <span className="margin-right-small">API: </span>
           <input
