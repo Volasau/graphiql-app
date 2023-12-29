@@ -30,9 +30,9 @@ function Item(props: ItemProps) {
   };
 
   return (
-    <>
+    <div data-testid="item">
       <div className="flex">
-        <div className="font-small padding"> {props.item.name}: </div>
+        <div className="font-small padding "> {props.item.name}: </div>
         <div className={typeClass} onClick={itemClickHandler}>
           {' '}
           {props.item.type}
@@ -50,7 +50,7 @@ function Item(props: ItemProps) {
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 }
 

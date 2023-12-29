@@ -50,3 +50,47 @@
   position: relative;
   top: 37px;
 }
+
+@media screen and (max-width: 700px) {
+  .flexi {
+    display: initial;
+    justify-content: initial;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: center;
+  }
+
+  .width-full .topL {
+    position: relative;
+    top: 0;
+  }
+
+  .explorer-block {
+    display: flex;
+    flex-direction: column;
+    margin: 48px 0 0 0;
+    width: 60px;
+  }
+
+  .input {
+    width: 250px;
+  }
+
+  .margin-right-small {
+    margin: 10px 0 10px 30px;
+  }
+
+  .api-block {
+    flex-direction: column;
+  }
+
+  .btn__adaptiv {
+    margin: 6px 0 0 30px;
+  }
+
+  .max-width {
+    width: 280px;
+  }
+}

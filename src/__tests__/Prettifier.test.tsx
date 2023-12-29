@@ -1,4 +1,8 @@
-import { prettify, formatStringWithSpaces } from '../utils/prettifier';
+import {
+  prettify,
+  formatStringWithSpaces,
+  formatStringAfterNextLine,
+} from '../utils/prettifier';
 
 import { describe, expect, it } from 'vitest';
 
@@ -23,5 +27,16 @@ describe('formatStringWithSpaces function', () => {
     const result = formatStringWithSpaces(inputString);
 
     expect(result).toMatch(expectedOutputRegex);
+  });
+});
+describe('formatStringAfterNextLine', () => {
+  it('correctly formats', () => {
+    const inputString =
+      'function foo() {\n   return {\n                   key: "value"\n   };\n}';
+    const expectedOutput = 'function foo() {return {key: "value"};}';
+
+    const result = formatStringAfterNextLine(inputString);
+
+    expect(result).toBe(expectedOutput);
   });
 });

@@ -220,8 +220,8 @@ function EditorPanel() {
 
   return (
     <>
-      <div className="max-width">
-        <div className="flex api-block flex-wrap">
+      <div data-testid="panel" className="max-width">
+        <div className="flexi api-block flex-wrap">
           <span className="margin-right-small">API: </span>
           <input
             className="margin-right-small input font-small"
@@ -233,12 +233,12 @@ function EditorPanel() {
           />
           <button
             onClick={getSchema}
-            className="link btn"
+            className="link btn btn__adaptiv"
             disabled={!endpoint.trim().length}
           >
             {lan === 'en' ? 'Get schema' : 'Получить схему'}
           </button>
-          <button onClick={runRequest} className="link btn">
+          <button onClick={runRequest} className="link btn btn__adaptiv">
             {lan === 'en' ? 'Run request' : 'Выполнить запрос'}
           </button>
         </div>

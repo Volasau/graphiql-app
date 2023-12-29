@@ -23,7 +23,6 @@ function DocumentationSchema(props: DocumentationSchemaProps) {
         </div>
         <div>
           {props.objects?.length ? (
-            // eslint-disable-next-line react/jsx-key
             <div>
               {props.objects.map((item, index) => (
                 <div className="margin-bottom" key={index}>

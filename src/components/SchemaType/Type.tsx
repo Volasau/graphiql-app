@@ -18,7 +18,7 @@ function SchemaType(props: TypeProps) {
   };
   return (
     <>
-      <div className="flex item" data-testid="item">
+      <div className="flex item" data-testid="schema-type">
         <div className="font-medium margin-small" onClick={nameClickHandler}>
           Object: {props.type?.name}
         </div>

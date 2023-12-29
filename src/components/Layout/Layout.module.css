@@ -1,11 +1,9 @@
 button {
-  /* border: none; */
   outline: none;
   margin: 0;
   padding: 0;
   background: none;
   cursor: pointer;
-  /* Дополнительные стили, если необходимо */
 }
 
 .container {

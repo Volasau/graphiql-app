@@ -67,7 +67,6 @@ small,
   outline: none;
 }
 
-
 @media screen and (max-width: 520px) {
   .registerForm {
     text-align: center;

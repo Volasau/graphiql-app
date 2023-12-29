@@ -10,7 +10,7 @@ describe('Test Login page', () => {
       render(
         <MemoryRouter>
           <LanguageProvider>
-            <DocumentationSchema types={[]}  />
+            <DocumentationSchema objects={[]} />
           </LanguageProvider>
         </MemoryRouter>
       );
