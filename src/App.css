@@ -62,3 +62,13 @@ ul {
 .active {
   background-color: rgb(179, 148, 95);
 }
+
+@media screen and (max-width: 700px) {
+  .cm-editor {
+    width: 280px;
+  }
+
+  .explorer-panel {
+    margin-top: 10px;
+  }
+}

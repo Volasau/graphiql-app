@@ -34,3 +34,39 @@
 .CodeMirror * {
   color: red;
 }
+
+.variables {
+  width: 600px;
+}
+
+@media screen and (max-width: 700px) {
+  .flex-buttons {
+    display: flex;
+    justify-content: initial;
+    margin: 15px 0 0 30px;
+  }
+
+  .btn__pritter {
+    margin: 20px 0 10px 30px;
+  }
+
+  .arrow-button {
+    margin: 2px 0 0 15px;
+  }
+
+  .variables {
+    width: 280px;
+  }
+
+  .max-width {
+    min-width: auto;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .flex-buttons {
+    display: flex;
+    justify-content: initial;
+    margin: 5px 0 0 0;
+  }
+}

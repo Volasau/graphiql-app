@@ -100,7 +100,7 @@ function Editor(props: EditorProps) {
     <>
       <div className="max-width">
         {!readonly ? (
-          <button onClick={runPrettify} className="link btn">
+          <button onClick={runPrettify} className="link btn btn__pritter">
             {lan === 'en' ? 'Prettify' : 'Форматировать'}
           </button>
         ) : (
@@ -150,11 +150,10 @@ function Editor(props: EditorProps) {
         )}
         {!readonly && showParameters && variablesVisible ? (
           <CodeMirror
-            className="paddingSmall font-small border width100 max-width"
+            className="paddingSmall font-small border width100 max-width variables"
             value={variables}
             onChange={variablesChange}
             height="100px"
-            width="600px"
             placeholder={
               lan === 'en' ? 'enter variables...' : 'введите переменные...'
             }
