@@ -1,7 +1,7 @@
 import './DocumentationSchema.css';
 import { useLanguage } from '../../context/contextLanguage';
-import { SchemaObject } from '../EditorPanel/Panel';
 import SchemaType from '../SchemaType/Type';
+import { SchemaObject } from '../../utils/types';
 
 interface DocumentationSchemaProps {
   objects: SchemaObject[];

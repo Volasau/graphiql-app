@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Item.css';
 import SchemaType from '../SchemaType/Type';
-import { SchemaObject, SchemaObjectField } from '../EditorPanel/Panel';
+import { SchemaObject, SchemaObjectField } from '../../utils/types';
 
 interface ItemProps {
   item: SchemaObjectField;
