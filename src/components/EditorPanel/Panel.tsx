@@ -61,26 +61,35 @@ function EditorPanel() {
       }),
     })
       .then((response) => {
-        response.json().then((res) => {
-          if (response.ok) {
-            setResult(
-              JSON.stringify(res.data ? res.data : 'Do data found', null, 3)
-            );
-            setErrorResult(false);
-          } else {
-            const errMessage = res.errors
-              ? res.errors[0]
-              : res.message
-                ? res
-                : { message: 'Failed to fetch data' };
-            errorHandler(errMessage);
-          }
+        response
+          .json()
+          .then((res) => {
+            if (response.ok) {
+              setResult(
+                JSON.stringify(res.data ? res.data : 'Do data found', null, 3)
+              );
+              setErrorResult(false);
+            } else {
+              const errMessage = res.errors
+                ? res.errors[0]
+                : res.message
+                  ? res
+                  : { message: 'Failed to fetch data' };
+              errorHandler(errMessage);
+            }
 
-          // in case errors appear in response with ok status
-          if (res.errors?.length) {
-            errorHandler(res.errors[0]);
-          }
-        });
+            // in case errors appear in response with ok status
+            if (res.errors?.length) {
+              errorHandler(res.errors[0]);
+            }
+          })
+          .catch((error) => {
+            toast.error(
+              lan === 'en'
+                ? `Error: \n for ${endpoint} \n ${error}. \n  Please make sure the url is valid and you have access.`
+                : `Ошибка: \n для ${endpoint} \n ${error}. \n  Убедитесь в правильности и доступности адреса.`
+            );
+          });
       })
       .catch((error) => {
         toast.error(
