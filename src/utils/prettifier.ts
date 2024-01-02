@@ -17,8 +17,6 @@ export const formatStringWithSpaces = (value: string): string => {
   const spaceCount = 3;
   let res = '';
   let level = 0;
-  value = value.trim();
-  console.log(value);
   for (let i = 0; i < value.length; i++) {
     const char = value[i];
     const prevChar = value[i - 1];
@@ -35,20 +33,17 @@ export const formatStringWithSpaces = (value: string): string => {
       res += char;
     }
   }
-  console.log(res);
   return res;
 };
 
 export const formatStringMultiSpaces = (value: string): string => {
+  const newValue = value.replace(/\s+/g, ' ').trim();
   let res = '';
   const spaceCount = 3;
   let level = 0;
-  console.log('proverka', value);
-  const valueArr = value.split('\n');
-  console.log('valueArr', valueArr);
+  const valueArr = newValue.split('\n');
   for (let i = 0; i < valueArr.length; i++) {
     const char = valueArr[i];
-    console.log('chartrim', char.trim());
     const prevChar = valueArr[i - 1] || null;
     if (
       char.startsWith(`${' '.repeat(level * spaceCount)}`) &&
@@ -61,7 +56,7 @@ export const formatStringMultiSpaces = (value: string): string => {
       res += char;
     } else if (prevChar?.includes('}')) {
       level--;
-      res += `${' '.repeat(level * spaceCount)}}`;
+      res += `${' '.repeat(level * spaceCount)}`;
     } else if (char.includes('{')) {
       level;
       res += char.trim();
@@ -69,7 +64,6 @@ export const formatStringMultiSpaces = (value: string): string => {
     } else {
       res += char;
     }
-    console.log('2', res);
   }
 
   return res;
