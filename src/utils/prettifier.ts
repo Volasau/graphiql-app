@@ -23,10 +23,14 @@ export const formatStringWithSpaces = (value: string): string => {
 
     if (char === '{') {
       level++;
-      res += `{\n${' '.repeat(level * spaceCount)}`;
+      if (level >= 0) {
+        res += `{\n${' '.repeat(level * spaceCount)}`;
+      }
     } else if (char === '}') {
       level--;
-      res += `\n${' '.repeat(level * spaceCount)}}`;
+      if (level >= 0) {
+        res += `\n${' '.repeat(level * spaceCount)}}`;
+      }
     } else {
       res += char;
     }
