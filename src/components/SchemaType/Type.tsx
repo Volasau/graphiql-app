@@ -1,7 +1,7 @@
 import './Type.css';
-import { SchemaObject } from '../EditorPanel/Panel';
 import Item from '../Item/Item';
 import { useState } from 'react';
+import { SchemaObject } from '../../utils/types';
 
 interface TypeProps {
   type: SchemaObject | undefined;
