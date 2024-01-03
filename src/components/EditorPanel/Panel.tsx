@@ -21,6 +21,14 @@ function EditorPanel() {
   const [errorResult, setErrorResult] = useState(false);
   const [objects, setObjects] = useState<SchemaObject[]>([]);
 
+  const showToast = (error: string) => {
+    toast.error(
+      lan === 'en'
+        ? `Error fetching data: \n for ${endpoint} \n ${error}. \n  Please make sure the url is valid and you have access.`
+        : `Ошибка получения данных: \n для ${endpoint} \n ${error}. \n  Убедитесь в правильности и доступности адреса.`
+    );
+  };
+
   const errorHandler = (err: ResponseError) => {
     setErrorResult(true);
     const errMessage = err.locations
@@ -61,33 +69,34 @@ function EditorPanel() {
       }),
     })
       .then((response) => {
-        response.json().then((res) => {
-          if (response.ok) {
-            setResult(
-              JSON.stringify(res.data ? res.data : 'Do data found', null, 3)
-            );
-            setErrorResult(false);
-          } else {
-            const errMessage = res.errors
-              ? res.errors[0]
-              : res.message
-                ? res
-                : { message: 'Failed to fetch data' };
-            errorHandler(errMessage);
-          }
+        response
+          .json()
+          .then((res) => {
+            if (response.ok) {
+              setResult(
+                JSON.stringify(res.data ? res.data : 'Do data found', null, 3)
+              );
+              setErrorResult(false);
+            } else {
+              const errMessage = res.errors
+                ? res.errors[0]
+                : res.message
+                  ? res
+                  : { message: 'Failed to fetch data' };
+              errorHandler(errMessage);
+            }
 
-          // in case errors appear in response with ok status
-          if (res.errors?.length) {
-            errorHandler(res.errors[0]);
-          }
-        });
+            // in case errors appear in response with ok status
+            if (res.errors?.length) {
+              errorHandler(res.errors[0]);
+            }
+          })
+          .catch((error) => {
+            showToast(error);
+          });
       })
       .catch((error) => {
-        toast.error(
-          lan === 'en'
-            ? `Error fetching data: \n for ${endpoint} \n ${error}. \n  Please make sure the url is valid and you have access.`
-            : `Ошибка получения данных: \n для ${endpoint} \n ${error}. \n  Убедитесь в правильности и доступности адреса.`
-        );
+        showToast(error);
       });
   };
 

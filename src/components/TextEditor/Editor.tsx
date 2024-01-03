@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 import CodeMirror from '@uiw/react-codemirror';
+import collapseVerticalIcon from '../../assets/images/collapseVerticalIcon.png';
+import expandVerticalIcon from '../../assets/images/expandVerticalIcon.png';
 import './Editor.css';
 import { prettify } from '../../utils/prettifier';
 
@@ -137,11 +139,7 @@ function Editor(props: EditorProps) {
             >
               <img
                 className="icon"
-                src={
-                  showParameters
-                    ? 'src/assets/images/collapseVerticalIcon.png'
-                    : 'src/assets/images/expandVerticalIcon.png'
-                }
+                src={showParameters ? collapseVerticalIcon : expandVerticalIcon}
               />
             </div>
           </div>
