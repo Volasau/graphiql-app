@@ -13,7 +13,7 @@ export interface SchemaObject {
 export interface TypeObject {
   name: string;
   kind: string;
-  ofType: TypeObject;
+  ofType?: TypeObject;
 }
 
 export interface SchemaFieldData {

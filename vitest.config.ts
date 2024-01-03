@@ -12,7 +12,12 @@ export default mergeConfig(
       watch: false,
       setupFiles: './src/setup.ts',
       coverage: {
-        exclude: ['src/main.tsx', 'src/vite-env.d.ts', 'src/setup.ts'],
+        exclude: [
+          'src/main.tsx',
+          'src/vite-env.d.ts',
+          'src/setup.ts',
+          'src/utils/types.ts',
+        ],
       },
     },
   })
