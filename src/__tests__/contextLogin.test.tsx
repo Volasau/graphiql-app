@@ -5,7 +5,6 @@ import { LoginProvider, useLogin } from '../context/loginContext';
 
 describe('useLogin', () => {
   test('throws an error when not used within a LoginProvider', () => {
-    //  используем хук в render вне контекста
     const { result } = renderHook(() => useLogin());
 
     expect(() => {
@@ -16,12 +15,10 @@ describe('useLogin', () => {
   });
 
   test('returns the correct context value when used within a LoginProvider', () => {
-    // используем хук в render внутри контекста
     const { result } = renderHook(() => useLogin(), {
       wrapper: ({ children }) => <LoginProvider>{children}</LoginProvider>,
     });
 
-    // возвращает корректное значение из контекста
     expect(result.current).toEqual({
       login: false,
       setLogin: expect.any(Function),
@@ -34,11 +31,9 @@ describe('useLogin', () => {
     });
 
     act(() => {
-      // Вызываем setLogin для обновления значения
       result.current.setLogin(true);
     });
 
-    //  значение было обновлено
     expect(result.current).toEqual({
       login: true,
       setLogin: expect.any(Function),

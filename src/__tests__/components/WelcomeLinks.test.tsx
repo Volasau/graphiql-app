@@ -24,8 +24,8 @@ describe('Test WelcomeLinks Component', () => {
       </MemoryRouter>
     );
 
-    const loginLink = screen.getByText('Login');
-    const registrationLink = screen.getByText('Registration');
+    const loginLink = screen.getByText('Sign in');
+    const registrationLink = screen.getByText('Sign up');
 
     expect(loginLink).toBeTruthy();
     expect(registrationLink).toBeTruthy();

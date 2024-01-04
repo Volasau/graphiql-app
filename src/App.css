@@ -63,6 +63,24 @@ ul {
   background-color: rgb(179, 148, 95);
 }
 
+.cm-editor {
+  width: 420px;
+  margin-bottom: 50px;
+}
+
+@media screen and (max-width: 860px) {
+  .flex-wrap {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .explorer-block {
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+  }
+}
+
 @media screen and (max-width: 700px) {
   .cm-editor {
     width: 280px;
@@ -70,5 +88,9 @@ ul {
 
   .explorer-panel {
     margin-top: 10px;
+  }
+
+  .explorer-block {
+    width: 280px;
   }
 }

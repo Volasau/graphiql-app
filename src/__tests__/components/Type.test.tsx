@@ -31,7 +31,6 @@ describe('Test SchemaType component', () => {
     const schemaType = screen.getByTestId('schema-type');
     expect(schemaType).toBeTruthy();
 
-    // Check if the items are rendered correctly
     const items = screen.getAllByTestId('schema-type');
     expect(items.length).toBe(allObjects.length + 1);
 

@@ -13,11 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function Layout() {
   const userValue = useContext<UserContextType>(UserContext);
   const loginValue = useContext<LoginContextType>(LoginContext);
-
-  //Context для смены языка
   const { lan, setLanguage } = useLanguage();
-
-  //анимация хедера при скролле
   const [scrolling, setScrolling] = useState(false);
 
   const handleScroll = () => {
@@ -34,7 +30,6 @@ function Layout() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
       if (currentUser) {
         userValue.setUser(currentUser);
         loginValue.setLogin(true);
@@ -46,7 +41,6 @@ function Layout() {
   const handleGraphiQLClick = () => {
     if (!loginValue.login) {
       navigate('/login');
-      console.log('handleGraph', loginValue.login);
     }
   };
 
@@ -55,14 +49,11 @@ function Layout() {
       try {
         await signOut(auth);
         userValue.setUser(null);
-        console.log('signed out');
         loginValue.setLogin(false);
         toast.warning('User Logged Out Successfully');
         navigate('/');
-        console.log('onlogout', loginValue.login);
-        console.log('onlogout context', userValue.user);
       } catch (error) {
-        console.log(error);
+        toast.error(`${error}`);
       }
     }
   };

@@ -1,5 +1,5 @@
-import { describe, expect, test /*,vi*/ } from 'vitest';
-import { act, render, screen /*,fireEvent*/ } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
+import { act, render, screen } from '@testing-library/react';
 import EditorPanel from '../../components/EditorPanel/Panel';
 import { LanguageProvider } from '../../context/contextLanguage';
 import { MemoryRouter } from 'react-router-dom';
