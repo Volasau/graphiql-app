@@ -5,6 +5,7 @@ import { useLanguage } from '../../context/contextLanguage';
 import { Suspense, lazy } from 'react';
 import { ResponseError, SchemaObject } from '../../utils/types';
 import { fetchSchema } from './SchemaAPI';
+import { ToastContainer, toast } from 'react-toastify';
 const DocumentationSchema = lazy(
   () => import('../DocumentationSchema/DocumentationSchema')
 );
@@ -20,19 +21,33 @@ function EditorPanel() {
   const [errorResult, setErrorResult] = useState(false);
   const [objects, setObjects] = useState<SchemaObject[]>([]);
 
-  //const [clientSchema, setClientSchema] = useState<string | null>(null);
+  const showToast = (error: string) => {
+    toast.error(
+      lan === 'en'
+        ? `Error fetching data: \n for ${endpoint} \n ${error}. \n  Please make sure the url is valid and you have access.`
+        : `Ошибка получения данных: \n для ${endpoint} \n ${error}. \n  Убедитесь в правильности и доступности адреса.`
+    );
+  };
 
   const errorHandler = (err: ResponseError) => {
     setErrorResult(true);
-    setResult(
-      `Error: ${err.message} at line ${err.locations[0].line}, column ${err.locations[0].column}`
-    );
+    const errMessage = err.locations
+      ? `Error: ${err.message} at line ${err.locations[0].line}, column ${err.locations[0].column}`
+      : `Error: ${err.message}`;
+    setResult(errMessage);
   };
 
   const getSchema = async () => {
     if (endpoint.trim() !== '') {
-      const schemaTypes = await fetchSchema(endpoint);
-      setObjects(schemaTypes);
+      const { error, result } = await fetchSchema(endpoint);
+      if (error) {
+        toast.error(
+          lan === 'en'
+            ? `Error fetching schema: \n for ${endpoint} \n ${error}. \n  Please make sure the url is valid and you have access.`
+            : `Ошибка получения схемы: \n для ${endpoint} \n ${error}. \n  Убедитесь в правильности и доступности адреса.`
+        );
+      }
+      setObjects(result);
       setShowExplorer(true);
     }
   };
@@ -54,21 +69,35 @@ function EditorPanel() {
       }),
     })
       .then((response) => {
-        response.json().then((res) => {
-          if (response.ok) {
-            setResult(JSON.stringify(res.data, null, 3));
-            setErrorResult(false);
-          } else {
-            errorHandler(res.errors[0]);
-          }
+        response
+          .json()
+          .then((res) => {
+            if (response.ok) {
+              setResult(
+                JSON.stringify(res.data ? res.data : 'Do data found', null, 3)
+              );
+              setErrorResult(false);
+            } else {
+              const errMessage = res.errors
+                ? res.errors[0]
+                : res.message
+                  ? res
+                  : { message: 'Failed to fetch data' };
+              errorHandler(errMessage);
+            }
 
-          // in case errors appear in response with ok status
-          if (res.errors?.length) {
-            errorHandler(res.errors[0]);
-          }
-        });
+            // in case errors appear in response with ok status
+            if (res.errors?.length) {
+              errorHandler(res.errors[0]);
+            }
+          })
+          .catch((error) => {
+            showToast(error);
+          });
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        showToast(error);
+      });
   };
 
   const apiChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -77,13 +106,14 @@ function EditorPanel() {
 
   const explorerClickHandler = () => {
     if (objects.length) {
-      setShowExplorer(!showExplorer);
+      setShowExplorer((prev) => !prev);
     }
   };
 
   return (
     <>
       <div data-testid="panel" className="max-width">
+        <ToastContainer />
         <div className="flexi api-block flex-wrap">
           <span className="margin-right-small">API: </span>
           <input
