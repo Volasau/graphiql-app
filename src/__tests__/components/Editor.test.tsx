@@ -12,7 +12,7 @@ describe('Test Editor component', () => {
     render(
       <LanguageProvider>
         <Editor
-          value="query Example {}"
+          value="query {}"
           readonly={false}
           error={false}
           onQueryChange={onQueryChangeMock}
