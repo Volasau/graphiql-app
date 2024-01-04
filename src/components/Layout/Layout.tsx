@@ -13,11 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function Layout() {
   const userValue = useContext<UserContextType>(UserContext);
   const loginValue = useContext<LoginContextType>(LoginContext);
-
-  //Context для смены языка
   const { lan, setLanguage } = useLanguage();
-
-  //анимация хедера при скролле
   const [scrolling, setScrolling] = useState(false);
 
   const handleScroll = () => {

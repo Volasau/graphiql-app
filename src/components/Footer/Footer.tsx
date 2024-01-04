@@ -7,7 +7,6 @@ function Footer() {
     <>
       <div className={style.footer}>
         <div>&copy; 2023</div>
-        {/*ссылка на github verapoletaeva87*/}
         <ul className={style.wrapper_link}>
           <li>
             <a
@@ -20,7 +19,6 @@ function Footer() {
               <p className={style.link_name}>Poletaeva</p>
             </a>
           </li>
-          {/*ссылка на github azimkhan93*/}
           <li>
             <a
               href="https://github.com/azimkhan93"
@@ -32,7 +30,6 @@ function Footer() {
               <span className={style.link_name}>Abdulsatarov</span>
             </a>
           </li>
-          {/*ссылка на github Volasau*/}
           <li>
             <a
               href="https://github.com/Volasau/"
@@ -45,7 +42,6 @@ function Footer() {
             </a>
           </li>
         </ul>
-        {/*ссылка на rrschool*/}
         <div className={style.logo_container}>
           <a
             href="https://rs.school/react/"

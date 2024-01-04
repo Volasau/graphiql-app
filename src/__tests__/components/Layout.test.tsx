@@ -51,7 +51,6 @@ describe('Test Layout component', () => {
     expect(logoutButton).toBeTruthy();
   });
 
-  // Clean mock after each test
   afterEach(() => {
     cleanup();
   });
