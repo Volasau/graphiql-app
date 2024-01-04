@@ -47,7 +47,7 @@ describe('Test Layout component', () => {
       </MemoryRouter>
     );
 
-    const logoutButton = screen.getByText('Logout');
+    const logoutButton = screen.getByText('Sign out');
     expect(logoutButton).toBeTruthy();
   });
 
