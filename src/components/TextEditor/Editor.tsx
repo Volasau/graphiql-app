@@ -50,7 +50,7 @@ function Editor(props: EditorProps) {
     const target = event.target as HTMLElement;
     if (countClick === 0 && !readonly) {
       if (!target.innerText.trim().length) {
-        setText('query Example {}');
+        setText('query {}');
       }
     }
     setCountClick(1);
