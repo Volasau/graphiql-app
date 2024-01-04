@@ -100,7 +100,7 @@ function LoginComp() {
           </div>
         </div>
         <button type="submit" className={`${style.loginBtn}`}>
-          {lan === 'en' ? 'Login' : 'Войти'}
+          {lan === 'en' ? 'Sign in' : 'Войти'}
         </button>
       </form>
     </div>

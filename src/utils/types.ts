@@ -28,7 +28,7 @@ export interface SchemaFieldData {
 export interface InputFieldData {
   name: string;
   description: string;
-  defaultValue: unknown; //???
+  defaultValue: unknown;
   type: TypeObject;
 }
 
