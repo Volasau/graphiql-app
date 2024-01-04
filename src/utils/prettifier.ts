@@ -57,7 +57,6 @@ export const formatStringWithSpaces = (value: string): string => {
     }
 
     if (nextChar === '{' || nextChar === '(') {
-      console.log('first', nextChar);
       res += char + ' ';
       continue;
     }
@@ -67,7 +66,6 @@ export const formatStringWithSpaces = (value: string): string => {
       (char === ' ' && nextChar !== '(')
     ) {
       res += `\n${' '.repeat(level * spaceCount)}`;
-      console.log('second', nextChar);
       continue;
     }
 

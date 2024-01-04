@@ -32,7 +32,6 @@ function LoginComp() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
       if (currentUser) {
         userValue.setUser(currentUser);
         navigate('/graphiql');

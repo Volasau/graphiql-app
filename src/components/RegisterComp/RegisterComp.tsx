@@ -30,18 +30,15 @@ const RegisterComp = () => {
   const navigate = useNavigate();
 
   async function onhandleSubmit(data: IFormInput) {
-    console.log(data);
     try {
       await createUserWithEmailAndPassword(
         auth,
         data.email,
         data.password
-      ).then((userCredential) => {
-        const user = userCredential.user;
+      ).then(() => {
         updateProfile(auth.currentUser as User, {
           displayName: data.name,
         });
-        console.log(user);
       });
       loginValue.setLogin(true);
       navigate('/graphiql');
@@ -56,7 +53,6 @@ const RegisterComp = () => {
           : 'Вы успешно зашли в систему'
       );
     } catch (error) {
-      console.log(error);
       toast.error(
         lan === 'en'
           ? 'User creation failed'
