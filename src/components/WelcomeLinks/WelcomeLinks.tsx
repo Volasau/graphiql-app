@@ -19,10 +19,10 @@ function WelcomeLinks() {
         ) : (
           <>
             <NavLink to="/login" className={style.link}>
-              {lan === 'en' ? 'Login' : 'Логин'}
+              {lan === 'en' ? 'Sign in' : 'Логин'}
             </NavLink>
             <NavLink to="/registration" className={style.link}>
-              {lan === 'en' ? 'Registration' : 'Регистрация'}
+              {lan === 'en' ? 'Sign up' : 'Регистрация'}
             </NavLink>
           </>
         )}

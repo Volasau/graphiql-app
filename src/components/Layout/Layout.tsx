@@ -97,16 +97,16 @@ function Layout() {
                 onClick={handleLogoutClick}
                 className={`${style.link} ${style.btn}`}
               >
-                {lan === 'en' ? 'Logout' : 'Выход'}
+                {lan === 'en' ? 'Sign out' : 'Выход'}
               </button>
             </>
           ) : (
             <>
               <Link to="/login" className={`${style.link} ${style.btn}`}>
-                {lan === 'en' ? 'Login' : 'Логин'}
+                {lan === 'en' ? 'Sign in' : 'Логин'}
               </Link>
               <Link to="/registration" className={`${style.link} ${style.btn}`}>
-                {lan === 'en' ? 'Registration' : 'Регистрация'}
+                {lan === 'en' ? 'Sign up' : 'Регистрация'}
               </Link>
             </>
           )}
