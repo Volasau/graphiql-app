@@ -1,0 +1,41 @@
+.flex {
+  display: flex;
+  justify-content: start;
+}
+
+.type {
+  color: rgb(49, 48, 77);
+}
+
+.margin-small {
+  margin-right: 6px;
+}
+
+.nested-type-block {
+  margin-left: 20px;
+  background-color: rgb(240, 236, 229);
+  border: 1px dotted grey;
+}
+
+.item {
+  line-height: 18px;
+}
+
+.item:hover {
+  cursor: pointer;
+  background-color: rgb(240, 236, 229);
+}
+
+.type:hover {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.padding {
+  padding-left: 16px;
+}
+
+.margin-bottom {
+  margin-bottom: 12px;
+}

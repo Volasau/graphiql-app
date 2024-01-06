@@ -1,0 +1,28 @@
+.logorss {
+  width: 270px;
+}
+
+.logo__wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.text {
+  max-width: 650px;
+}
+
+.list {
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.title {
+  margin-bottom: 5px;
+}

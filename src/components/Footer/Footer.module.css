@@ -1,0 +1,41 @@
+li {
+  list-style-type: none;
+}
+
+.wrapper_link {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logorss {
+  width: 100px;
+}
+
+.logogit {
+  width: 30px;
+}
+
+.link_github {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.link_github:hover {
+  color: rgb(49, 48, 77);
+}
+
+.link_name:hover {
+  color: rgb(49, 48, 77);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: rgb(182, 187, 196);
+  padding: 10px;
+  margin-top: 15px;
+}

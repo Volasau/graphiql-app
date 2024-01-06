@@ -1,0 +1,96 @@
+* {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: black;
+}
+
+body {
+  margin: 2px;
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.font-large {
+  font-size: 24px;
+}
+
+.font-medium {
+  font-size: 18px;
+}
+
+.font-small {
+  font-size: 14px;
+}
+
+.color-mediumdark {
+  background-color: rgb(49, 48, 77);
+}
+
+.color-mediumlight {
+  background-color: rgb(182, 187, 196);
+}
+
+.color-light {
+  background-color: rgb(240, 236, 229);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.btn {
+  font-size: 15px;
+  color: black;
+  padding: 8px 16px;
+  background-color: rgb(224, 219, 191);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover:enabled {
+  background-color: rgb(226, 199, 154);
+}
+
+.active {
+  background-color: rgb(179, 148, 95);
+}
+
+.cm-editor {
+  width: 420px;
+  margin-bottom: 50px;
+}
+
+@media screen and (max-width: 860px) {
+  .flex-wrap {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .explorer-block {
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .cm-editor {
+    width: 280px;
+  }
+
+  .explorer-panel {
+    margin-top: 10px;
+  }
+
+  .explorer-block {
+    width: 280px;
+  }
+}

@@ -1,0 +1,77 @@
+.subContainer {
+  padding: 50px 0 90px;
+}
+
+.loginHeader {
+  text-align: center;
+}
+
+.loginForm {
+  padding: 80px 70px 80px;
+  border: 2px solid rgb(182, 187, 196);
+  border-radius: 10px;
+}
+
+.loginForm input {
+  width: 230px;
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid rgb(182, 187, 196);
+  font-size: 18px;
+  padding: 10px 15px;
+}
+
+.errorText {
+  height: 20px;
+}
+
+small,
+.pre {
+  padding: 0;
+  margin: 0;
+  max-width: 230px;
+}
+
+.textDanger {
+  color: red;
+}
+
+.emailLogin,
+.passwordLogin {
+  padding-bottom: 10px;
+}
+
+.loginBtn {
+  margin: 20px 0 0 60px;
+  border-radius: 4px;
+  background-color: rgb(224, 219, 191);
+  color: black;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 80ms ease-in;
+}
+
+.loginBtn:hover {
+  background-color: rgb(226, 199, 154);
+}
+
+.loginBtn:active {
+  transform: scale(0.95);
+}
+
+.loginBtn:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 520px) {
+  .loginForm {
+    text-align: center;
+    padding: 10px 4px 10px 4px;
+  }
+
+  .loginBtn {
+    margin: 30px;
+  }
+}

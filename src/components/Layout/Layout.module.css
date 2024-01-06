@@ -1,0 +1,50 @@
+button {
+  outline: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background-color: rgb(182, 187, 196);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  color: rgb(49, 48, 77);
+}
+
+.scrolling {
+  background-color: rgb(240, 236, 229);
+}
+
+.btn {
+  font-size: 15px;
+  color: black;
+  padding: 8px 16px;
+  background-color: rgb(224, 219, 191);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: rgb(226, 199, 154);
+}
+
+.active {
+  background-color: rgb(179, 148, 95);
+}

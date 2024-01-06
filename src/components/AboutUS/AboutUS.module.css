@@ -1,0 +1,24 @@
+.photo {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.wrapper_persone {
+  width: 300px;
+  text-align: center;
+  border: 2px solid rgb(49, 48, 77);
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.develops {
+  padding-left: 70px;
+}

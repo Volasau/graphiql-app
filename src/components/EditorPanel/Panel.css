@@ -1,0 +1,97 @@
+.padding-top-small {
+  padding-top: 14px;
+}
+
+.margin-right-small {
+  margin-right: 14px;
+}
+
+.baseline {
+  align-items: baseline;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.api-block {
+  height: 40px;
+  align-items: center;
+}
+
+.height30 {
+  height: 30px;
+  width: fit-content;
+}
+
+.input {
+  width: 300px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+}
+
+.padding-top-small {
+  padding-top: 14px;
+}
+
+.explorer-block {
+  min-width: 99px;
+  position: relative;
+  left: 0px;
+  margin-top: 30px;
+}
+
+.topL {
+  position: relative;
+  top: 37px;
+}
+
+@media screen and (max-width: 700px) {
+  .flexi {
+    display: initial;
+    justify-content: initial;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: center;
+  }
+
+  .width-full .topL {
+    position: relative;
+    top: 0;
+  }
+
+  .explorer-block {
+    display: flex;
+    flex-direction: column;
+    margin: 48px 0 0 0;
+  }
+
+  .input {
+    width: 250px;
+  }
+
+  .margin-right-small {
+    margin: 10px 0 10px 30px;
+  }
+
+  .api-block {
+    flex-direction: column;
+  }
+
+  .btn__adaptiv {
+    margin: 6px 0 0 30px;
+  }
+
+  .max-width {
+    width: 280px;
+  }
+}

@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.editorPanel {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(240, 236, 229);
+  max-width: 100%;
+  min-width: 320px;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 420px) {
+  .editorPanel {
+    min-width: 300px;
+  }
+}
