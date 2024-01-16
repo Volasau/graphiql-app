@@ -1,3 +1,8 @@
+export const TitleAboutProject = {
+  en: 'GraphiQL Project',
+  ru: 'GraphiQL Проект',
+};
+
 export const DataAboutProgect = {
   en: [
     'Our team successfully created the GraphiQL application for working with GraphQL queries.',
