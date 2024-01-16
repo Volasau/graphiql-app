@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import { describe, test, assert, vi, expect } from 'vitest';
 import { LanguageProvider } from '../../context/contextLanguage';
-import AboutCourse from '../../components/AboutCourse/AboutCourse';
+import { AboutCourse } from '../../components/AboutCourse/AboutCourse';
 import { DataAboutCourse } from '../../utils/data/DataAbout';
 
 describe('AboutCourse component', () => {

@@ -1,6 +1,6 @@
 import { describe, test, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Editor from '../../components/TextEditor/Editor';
+import { Editor } from '../../components/TextEditor/Editor';
 import { LanguageProvider } from '../../context/contextLanguage';
 
 describe('Test Editor component', () => {

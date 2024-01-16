@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
-import DocumentationSchema from '../../components/DocumentationSchema/DocumentationSchema';
+import { DocumentationSchema } from '../../components/DocumentationSchema/DocumentationSchema';
 import { LanguageProvider } from '../../context/contextLanguage';
 import { MemoryRouter } from 'react-router-dom';
 

@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import DocumentationSchema from '../../components/DocumentationSchema/DocumentationSchema';
+import { DocumentationSchema } from '../../components/DocumentationSchema/DocumentationSchema';
 import { render, screen, within } from '@testing-library/react';
 import { LanguageProvider } from '../../context/contextLanguage';
 

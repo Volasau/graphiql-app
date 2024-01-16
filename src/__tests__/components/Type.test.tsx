@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import SchemaType from '../../components/SchemaType/Type';
+import { SchemaType } from '../../components/SchemaType/Type';
 
 describe('Test SchemaType component', () => {
   test('Should render SchemaType component with provided data', () => {

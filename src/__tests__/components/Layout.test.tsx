@@ -1,7 +1,7 @@
 import { render, screen, cleanup, act } from '@testing-library/react';
 import { describe, test, expect, afterEach, vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
-import Layout from '../../components/Layout/Layout';
+import { Layout } from '../../components/Layout/Layout';
 import { UserContext, UserContextType } from '../../context/authContext';
 import { LoginContext } from '../../context/loginContext';
 import { IdTokenResult, User } from 'firebase/auth';

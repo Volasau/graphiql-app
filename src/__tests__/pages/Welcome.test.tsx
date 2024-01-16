@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
-import Welcome from '../../pages/Welcome/Welcome';
+import { Welcome } from '../../pages/Welcome/Welcome';
 import { LanguageProvider } from '../../context/contextLanguage';
 import { MemoryRouter } from 'react-router-dom';
 

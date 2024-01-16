@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import WelcomeLinks from '../../components/WelcomeLinks/WelcomeLinks';
+import { WelcomeLinks } from '../../components/WelcomeLinks/WelcomeLinks';
 import { LoginContext, LoginContextType } from '../../context/loginContext';
 import { LanguageProvider } from '../../context/contextLanguage';
 

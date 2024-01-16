@@ -45,4 +45,4 @@ function DocumentationSchema(props: DocumentationSchemaProps) {
   );
 }
 
-export default DocumentationSchema;
+export { DocumentationSchema };

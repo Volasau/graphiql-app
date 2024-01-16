@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import { LanguageProvider } from '../../context/contextLanguage';
 import { MemoryRouter } from 'react-router-dom';
-import Graphi from '../../pages/GraphiQl/Graphi';
+import { Graphi } from '../../pages/GraphiQl/Graphi';
 
 describe('Test Graphi page', () => {
   test('Сhecked Graphi page', () => {
