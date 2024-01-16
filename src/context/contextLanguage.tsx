@@ -6,7 +6,7 @@ import React, {
   useMemo,
 } from 'react';
 
-enum SupportedLanguages {
+export enum SupportedLanguages {
   EN = 'en',
   RU = 'ru',
 }

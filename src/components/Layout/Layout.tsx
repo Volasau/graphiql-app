@@ -2,7 +2,7 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import style from './Layout.module.css';
 import { useContext, useEffect, useState } from 'react';
-import { useLanguage } from '../../context/contextLanguage';
+import { SupportedLanguages, useLanguage } from '../../context/contextLanguage';
 import { UserContext, UserContextType } from '../../context/authContext';
 import { onAuthStateChanged, signOut } from '@firebase/auth';
 import { auth } from '../../functions/firebase';
@@ -58,10 +58,10 @@ function Layout() {
     }
   };
   const handleLanClickEn = () => {
-    setLanguage('en');
+    setLanguage(SupportedLanguages.EN);
   };
   const handleLanClickRu = () => {
-    setLanguage('ru');
+    setLanguage(SupportedLanguages.RU);
   };
 
   return (
