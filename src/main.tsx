@@ -8,7 +8,13 @@ import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
 import { UserProvider } from './context/authContext';
 import { LoginProvider } from './context/loginContext';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error("Root element with id 'root' not found");
+}
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <ErrorBoundary>
