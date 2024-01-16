@@ -30,4 +30,4 @@ function AboutCourse() {
   );
 }
 
-export default AboutCourse;
+export { AboutCourse };

@@ -1,4 +1,4 @@
-import LoginComp from '../../components/LoginComp/LoginComp';
+import { LoginComp } from '../../components/LoginComp/LoginComp';
 import style from './LoginPage.module.css';
 function Login() {
   return (
@@ -10,4 +10,4 @@ function Login() {
   );
 }
 
-export default Login;
+export { Login };

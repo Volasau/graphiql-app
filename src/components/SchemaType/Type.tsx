@@ -1,5 +1,5 @@
 import './Type.css';
-import Item from '../Item/Item';
+import { Item } from '../Item/Item';
 import { useState } from 'react';
 import { SchemaObject } from '../../utils/types';
 
@@ -42,4 +42,4 @@ function SchemaType(props: TypeProps) {
   );
 }
 
-export default SchemaType;
+export { SchemaType };

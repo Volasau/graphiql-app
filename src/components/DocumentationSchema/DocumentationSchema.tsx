@@ -1,6 +1,6 @@
 import './DocumentationSchema.css';
 import { useLanguage } from '../../context/contextLanguage';
-import SchemaType from '../SchemaType/Type';
+import { SchemaType } from '../SchemaType/Type';
 import { SchemaObject } from '../../utils/types';
 
 interface DocumentationSchemaProps {

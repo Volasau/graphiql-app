@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './Item.css';
-import SchemaType from '../SchemaType/Type';
+import { SchemaType } from '../SchemaType/Type';
 import { SchemaObject, SchemaObjectField } from '../../utils/types';
 
 interface ItemProps {
@@ -54,4 +54,4 @@ function Item(props: ItemProps) {
   );
 }
 
-export default Item;
+export { Item };

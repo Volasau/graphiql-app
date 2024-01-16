@@ -105,4 +105,4 @@ function LoginComp() {
     </div>
   );
 }
-export default LoginComp;
+export { LoginComp };

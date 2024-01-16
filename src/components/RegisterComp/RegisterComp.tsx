@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import {
   User,
   createUserWithEmailAndPassword,
@@ -152,4 +152,4 @@ const RegisterComp = () => {
     </div>
   );
 };
-export default RegisterComp;
+export { RegisterComp };

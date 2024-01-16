@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import Footer from '../Footer/Footer';
+import { Footer } from '../Footer/Footer';
 import style from './Layout.module.css';
 import { useContext, useEffect, useState } from 'react';
 import { SupportedLanguages, useLanguage } from '../../context/contextLanguage';
@@ -125,4 +125,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export { Layout };

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import style from './Graphi.module.css';
 import { useContext, useEffect } from 'react';
-import EditorPanel from '../../components/EditorPanel/Panel';
+import { EditorPanel } from '../../components/EditorPanel/Panel';
 import { LoginContext, LoginContextType } from '../../context/loginContext';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from '../../functions/firebase';
@@ -37,4 +37,4 @@ function Graphi() {
   );
 }
 
-export default Graphi;
+export { Graphi };

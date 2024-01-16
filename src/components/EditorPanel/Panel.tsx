@@ -1,5 +1,5 @@
 import './Panel.css';
-import Editor from '../TextEditor/Editor';
+import { Editor } from '../TextEditor/Editor';
 import { ChangeEvent, useState } from 'react';
 import { useLanguage } from '../../context/contextLanguage';
 import { Suspense, lazy } from 'react';
@@ -173,4 +173,4 @@ function EditorPanel() {
   );
 }
 
-export default EditorPanel;
+export { EditorPanel };

@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Welcome from './pages/Welcome/Welcome';
-import Layout from './components/Layout/Layout';
-import Login from './pages/LoginPage/LoginPage';
-import Registration from './pages/RegisterPage/RegisterPage';
-import Error from './pages/Error/Error';
-import Graphi from './pages/GraphiQl/Graphi';
+import { Welcome } from './pages/Welcome/Welcome';
+import { Layout } from './components/Layout/Layout';
+import { Login } from './pages/LoginPage/LoginPage';
+import { Registration } from './pages/RegisterPage/RegisterPage';
+import { Error } from './pages/Error/Error';
+import { Graphi } from './pages/GraphiQl/Graphi';
 
 function App() {
   return (
@@ -25,4 +25,4 @@ function App() {
   );
 }
 
-export default App;
+export { App };

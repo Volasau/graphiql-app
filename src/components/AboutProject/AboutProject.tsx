@@ -32,4 +32,4 @@ function AboutProject() {
   );
 }
 
-export default AboutProject;
+export { AboutProject };

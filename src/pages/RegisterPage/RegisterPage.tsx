@@ -1,4 +1,4 @@
-import RegisterComp from '../../components/RegisterComp/RegisterComp';
+import { RegisterComp } from '../../components/RegisterComp/RegisterComp';
 import style from './RegisterPage.module.css';
 
 function Registration() {
@@ -11,4 +11,4 @@ function Registration() {
   );
 }
 
-export default Registration;
+export { Registration };

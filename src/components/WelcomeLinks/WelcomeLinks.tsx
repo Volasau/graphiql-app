@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { LoginContext, LoginContextType } from '../../context/loginContext';
 import { NavLink } from 'react-router-dom';
 import { useLanguage } from '../../context/contextLanguage';
@@ -31,4 +31,4 @@ function WelcomeLinks() {
   );
 }
 
-export default WelcomeLinks;
+export { WelcomeLinks };
