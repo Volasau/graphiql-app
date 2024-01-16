@@ -1,8 +1,19 @@
-import React, { useState, useContext, ReactNode } from 'react';
+import React, {
+  useState,
+  useContext,
+  ReactNode,
+  Dispatch,
+  useMemo,
+} from 'react';
+
+enum SupportedLanguages {
+  EN = 'en',
+  RU = 'ru',
+}
 
 interface LanguageContextProps {
-  lan: string;
-  setLanguage: (language: string) => void;
+  lan: SupportedLanguages;
+  setLanguage: Dispatch<SupportedLanguages>;
 }
 
 const LanguageContext = React.createContext<LanguageContextProps | undefined>(
@@ -16,14 +27,18 @@ interface LanguageProviderProps {
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   children,
 }) => {
-  const [lan, setLang] = useState('en');
+  const [lan, setLang] = useState(SupportedLanguages.EN);
 
-  const setLanguage = (language: string) => {
-    setLang(language);
-  };
+  const contextValue = useMemo(() => {
+    const setLanguage = (language: SupportedLanguages) => {
+      setLang(language);
+    };
+
+    return { lan, setLanguage };
+  }, [lan]);
 
   return (
-    <LanguageContext.Provider value={{ lan, setLanguage }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );
